@@ -3,6 +3,8 @@ version: "3.7"
 services:
   api:
     env_file: .env
+    volumes:
+      - /app/target
     build:
       context: ./actix-backend
       dockerfile: Dockerfile.dev
@@ -17,3 +19,21 @@ services:
     restart: always
     depends_on:
       - api
+      - react
+  react:
+    build: ./frontend
+    container_name: itf-days-react
+    command: sh -c "yarn install && yarn start"
+    ports:
+      - 3001:3000
+    env_file:
+      - ./.env
+    tty: true
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    volumes:
+      - ./frontend/:/srv/app
+      - /srv/app/node_modules
+    depends_on:
+      - api
+    restart: on-failure
