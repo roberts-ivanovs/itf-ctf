@@ -93,25 +93,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "actix-mysql-sqlx-todo"
-version = "0.1.0"
-dependencies = [
- "actix-rt",
- "actix-web",
- "anyhow",
- "async-trait",
- "dotenv",
- "env_logger",
- "futures",
- "log",
- "serde",
- "serde-aux",
- "serde_json",
- "sqlx",
- "thiserror",
-]
-
-[[package]]
 name = "actix-router"
 version = "0.2.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1061,6 +1042,25 @@ dependencies = [
  "widestring",
  "winapi 0.3.9",
  "winreg",
+]
+
+[[package]]
+name = "itf-days-api"
+version = "0.1.0"
+dependencies = [
+ "actix-rt",
+ "actix-web",
+ "anyhow",
+ "async-trait",
+ "dotenv",
+ "env_logger",
+ "futures",
+ "log",
+ "serde",
+ "serde-aux",
+ "serde_json",
+ "sqlx",
+ "thiserror",
 ]
 
 [[package]]

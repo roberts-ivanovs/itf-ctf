@@ -1,5 +1,5 @@
 use serde::{Deserialize, Serialize};
-use sqlx::{FromRow};
+use sqlx::FromRow;
 
 use crate::state::AppState;
 
@@ -8,13 +8,12 @@ type SqlID = u64;
 #[derive(FromRow, Serialize, Deserialize, Clone, Debug)]
 pub struct User {
     pub id: SqlID,
-    pub name: String,
     pub email: String,
 }
 
+
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Register {
-    pub name: String,
     pub email: String,
 }
 
@@ -30,10 +29,9 @@ impl IUser for AppState {
     async fn user_add(&self, form: &Register) -> sqlx::Result<SqlID> {
         let id = sqlx::query!(
             r#"
-        INSERT INTO users (name, email)
-        VALUES (?, ?);
+        INSERT INTO users (email)
+        VALUES (?);
                 "#,
-            form.name,
             form.email,
         )
         .execute(&self.sql)
@@ -46,7 +44,7 @@ impl IUser for AppState {
         sqlx::query_as!(
             User,
             r#"
-        SELECT id, name, email
+        SELECT id, email
         FROM users
         where id = ?
                 "#,
@@ -60,7 +58,7 @@ impl IUser for AppState {
         sqlx::query_as!(
             User,
             r#"
-        SELECT id, name, email
+        SELECT id, email
         FROM users
         ORDER BY id
             "#,

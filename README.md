@@ -1,7 +1,7 @@
 
 DB setup
 
-    docker exec -i actix-todo-dev-db mysql -uroot -ppassword < db/schema.sql
+    docker exec -i itf-days-db mysql -uroot -ppassword < db/schema.sql
 
 Start project PRODUCTION
 

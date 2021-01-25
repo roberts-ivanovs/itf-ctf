@@ -2,14 +2,13 @@ use crate::{
     api::ApiResult,
     how::Error,
     state::AppState,
-    todo::models::users::{IUser, Register},
+    ctf::models::users::{IUser, Register},
 };
 use actix_web::{get, post};
 use actix_web::{web, HttpRequest, Responder};
 
 #[get("")]
 async fn get_users(_req: HttpRequest, state: web::Data<AppState>) -> Result<impl Responder, Error> {
-    println!("HERE");
     let users = &state.user_all().await?;
     debug!("users {:#?}", &users);
     let res = ApiResult::new().with_msg("ok").with_data(users);
@@ -51,6 +50,7 @@ mod tests {
     use futures::StreamExt;
     use actix_web::{test, web, App};
 
+    // TODO Test all the endpoints
 
     #[actix_rt::test]
     async fn test_index_get() {
@@ -62,7 +62,7 @@ mod tests {
         )
         .await;
         let req = test::TestRequest::get()
-            .uri("/api/v1/todo/user")
+            .uri("/api/v1/ctf/user")
             .to_request();
         let mut resp = test::call_service(&mut app, req).await;
 

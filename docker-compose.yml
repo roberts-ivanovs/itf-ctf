@@ -9,7 +9,9 @@ services:
   nginx:
     build: ./nginx
     env_file: .env
-    container_name: actix-todo-dev-nginx
+    container_name: itf-days-dev-nginx
+    volumes:
+      - ./static/:/srv/app/static
     ports:
       - 8080:80
     restart: always

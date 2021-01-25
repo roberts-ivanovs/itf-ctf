@@ -11,13 +11,14 @@ use sqlx::MySqlPool;
 use state::DatabaseSettings;
 use std::env;
 
+
 mod testing;
 mod api;
 mod how;
 mod routes;
 mod startup;
 mod state;
-mod todo;
+mod ctf;
 
 #[actix_web::main]
 async fn main() -> Result<()> {
