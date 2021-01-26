@@ -6,12 +6,12 @@ use crate::state::AppState;
 type SqlID = u64;
 
 #[derive(FromRow, Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "camelCase")]
 pub struct Score {
     pub id: SqlID,
     pub flag_id: SqlID,
     pub user_id: SqlID,
 }
-
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
@@ -24,6 +24,8 @@ pub struct NewScore {
 pub trait IScore {
     async fn score_add(&self, form: &NewScore) -> sqlx::Result<SqlID>;
     async fn score_all(&self) -> sqlx::Result<Vec<Score>>;
+    async fn score_for_user(&self, user_id: SqlID) -> sqlx::Result<Vec<Score>>;
+    async fn score_for_flag(&self, falg_id: SqlID) -> sqlx::Result<Vec<Score>>;
 }
 
 #[async_trait]
@@ -51,6 +53,36 @@ impl IScore for AppState {
         FROM score
         ORDER BY id
             "#,
+        )
+        .fetch_all(&self.sql)
+        .await
+    }
+
+    async fn score_for_user(&self, user_id: SqlID) -> sqlx::Result<Vec<Score>> {
+        sqlx::query_as!(
+            Score,
+            r#"
+        SELECT *
+        FROM score
+        WHERE user_id = ?
+        ORDER BY id
+            "#,
+            user_id,
+        )
+        .fetch_all(&self.sql)
+        .await
+    }
+
+    async fn score_for_flag(&self, user_id: SqlID) -> sqlx::Result<Vec<Score>> {
+        sqlx::query_as!(
+            Score,
+            r#"
+        SELECT *
+        FROM score
+        WHERE flag_id = ?
+        ORDER BY id
+            "#,
+            user_id,
         )
         .fetch_all(&self.sql)
         .await
