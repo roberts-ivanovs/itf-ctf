@@ -1,6 +1,6 @@
 import axios from 'axios';
 import {
-  AnswerlessFlag, BasicAPI, PostAnswer, Register, Score,
+  AnswerlessFlag, BasicAPI, PostAnswer, Register, Score, User,
 } from './types';
 
 // TODO This is not needed if we're not using sessions
@@ -31,7 +31,7 @@ async function post<T, B>(url: string, params: B): Promise<T> {
 }
 
 class Requester {
-  getUserId = (email: string): Promise<BasicAPI<number>> => get(`${urls.users}/email/${email}`, {});
+  getUserId = (email: string): Promise<BasicAPI<User>> => get(`${urls.users}/email/${email}`, {});
 
   getAllFlags = (): Promise<BasicAPI<Array<AnswerlessFlag>>> => get(urls.flag, {});
 

@@ -21,10 +21,9 @@ pub struct Register {
 
 #[async_trait]
 pub trait IUser {
-    // async fn user_add(&self, form: &Register, name: String) -> sqlx::Result<SqlID>;
     async fn user_add(&self, form: &Register, name: String) -> Result<SqlID, Error>;
     async fn user_query(&self, id: SqlID) -> sqlx::Result<User>;
-    async fn user_by_email(&self, email: String) -> sqlx::Result<SqlID>;
+    async fn user_by_email(&self, email: String) -> sqlx::Result<User>;
     async fn user_all(&self) -> sqlx::Result<Vec<User>>;
 }
 
@@ -86,11 +85,11 @@ impl IUser for AppState {
     }
 
 
-    async fn user_by_email(&self, email: String) -> sqlx::Result<SqlID> {
+    async fn user_by_email(&self, email: String) -> sqlx::Result<User> {
         let res = sqlx::query_as!(
-            Exists,
+            User,
             r#"
-        SELECT id as count
+        SELECT *
         FROM users
         where email = ?
                 "#,
@@ -98,7 +97,7 @@ impl IUser for AppState {
         )
         .fetch_one(&self.sql)
         .await?;
-        Ok(res.count)
+        Ok(res)
     }
 }
 

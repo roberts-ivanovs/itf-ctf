@@ -300,31 +300,6 @@
       ]
     }
   },
-  "96fcd8824a5b221139feaf4a09df869320d6d41427eba3f802a10fb92fc5a0a5": {
-    "query": "\n        SELECT id as count\n        FROM users\n        where email = ?\n                ",
-    "describe": {
-      "columns": [
-        {
-          "ordinal": 0,
-          "name": "count",
-          "type_info": {
-            "type": "LongLong",
-            "flags": {
-              "bits": 547
-            },
-            "char_set": 63,
-            "max_size": 20
-          }
-        }
-      ],
-      "parameters": {
-        "Right": 1
-      },
-      "nullable": [
-        false
-      ]
-    }
-  },
   "9c828847a7829bd49cdac361c7abd2180decbd1959d05bb7e4b4f6fa5aa7d989": {
     "query": "\n        SELECT id, name, filepath, description\n        FROM flag\n        ORDER BY id\n            ",
     "describe": {
@@ -623,6 +598,57 @@
       ],
       "parameters": {
         "Right": 0
+      },
+      "nullable": [
+        false,
+        false,
+        false
+      ]
+    }
+  },
+  "e4e5877237116168410ad6c9278408425414c7eb8e12ea84b5faf65b0dd5ccd0": {
+    "query": "\n        SELECT *\n        FROM users\n        where email = ?\n                ",
+    "describe": {
+      "columns": [
+        {
+          "ordinal": 0,
+          "name": "id",
+          "type_info": {
+            "type": "LongLong",
+            "flags": {
+              "bits": 547
+            },
+            "char_set": 63,
+            "max_size": 20
+          }
+        },
+        {
+          "ordinal": 1,
+          "name": "email",
+          "type_info": {
+            "type": "VarString",
+            "flags": {
+              "bits": 4101
+            },
+            "char_set": 224,
+            "max_size": 1024
+          }
+        },
+        {
+          "ordinal": 2,
+          "name": "name",
+          "type_info": {
+            "type": "VarString",
+            "flags": {
+              "bits": 4101
+            },
+            "char_set": 224,
+            "max_size": 1024
+          }
+        }
+      ],
+      "parameters": {
+        "Right": 1
       },
       "nullable": [
         false,

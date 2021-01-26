@@ -22,7 +22,7 @@ export function CTF(): ReactElement {
       <h1>CTF Title here</h1>
       <div className={style['task-wrapper']}>
         {flags.map((e) => (
-          <>
+          <React.Fragment key={e.id}>
             <div key={e.id} className={`${style['flag-box']}`} data-toggle="modal" data-target={`#modal${e.id}`}>
               <div className={`${style['gears-icon']}`}>
                 <i className="fas fa-cogs" />
@@ -32,7 +32,7 @@ export function CTF(): ReactElement {
               </div>
             </div>
             <Flag key={`${e.id}modal`} id={e.id.toString()} flag={e} />
-          </>
+          </React.Fragment>
         ))}
       </div>
     </div>

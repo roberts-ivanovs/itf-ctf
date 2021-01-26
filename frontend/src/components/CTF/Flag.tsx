@@ -15,6 +15,7 @@ export function Flag({ flag, id }: Props): ReactElement {
   const [email, setEmail] = useState('');
   const [answer, setAnswer] = useState('');
   const [status, setStatus] = useState<ReactElement>();
+  const [status2, setStatus2] = useState<ReactElement>();
 
   const submit = useCallback(
     async () => {
@@ -23,7 +24,7 @@ export function Flag({ flag, id }: Props): ReactElement {
         .then((e) => e.data)
         .catch(async () => {
           // If does not exist -> register
-          const resNew = await Requester.postCreateUser({ email }).then((e) => e.data)
+          const resNew = await Requester.postCreateUser({ email }).then(async (e) => Requester.getUserId(email).then((e) => e.data))
             .catch((e) => {
               const error = e.response.data as BasicAPI<null>;
               console.log('here', error);
@@ -38,13 +39,20 @@ export function Flag({ flag, id }: Props): ReactElement {
 
       if (!userId) return;
 
+
+      setStatus2(
+        <div className="alert alert-success">
+          Tavs segvārds -- {userId.name}
+        </div>,
+      );
+
       // Send request to save score
       // TODO save to localstorage context
       await Requester.postAnswer(
         {
           metadata: {
             flagId: flag.id,
-            userId,
+            userId: userId.id,
           },
           answer,
         },
@@ -81,6 +89,7 @@ export function Flag({ flag, id }: Props): ReactElement {
           <div className="modal-body">
             <div className={`${style['modal-form-wrapper']}`}>
               {status}
+              {status2}
               <div className={`${style.description}`}>
                 {flag.description}
               </div>
