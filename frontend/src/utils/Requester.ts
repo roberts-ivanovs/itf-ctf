@@ -1,4 +1,5 @@
 import axios, { AxiosError } from 'axios';
+import { AnswerlessFlag, BasicAPI } from './types';
 
 // TODO This is not needed if we're not using sessions
 const apiClient = axios.create({
@@ -6,13 +7,14 @@ const apiClient = axios.create({
   xsrfHeaderName: 'X-CSRFTOKEN',
 });
 
-const urls = {};
-
+const urls = {
+  tasks: '/api/v1/ctf/flag',
+};
 
 async function get<T, B>(url: string, params: B): Promise<T> {
   const response = await apiClient
     .get<T>(url, { params })
-    .then((val) => val.data)
+    .then((val) => val.data);
   return response;
 }
 
@@ -24,11 +26,8 @@ async function post<T, B>(url: string, params: B): Promise<T> {
   return response;
 }
 
-
 class Requester {
-  cookieSet = false;
-
-
+  getAllFlags = (): Promise<BasicAPI<Array<AnswerlessFlag>>> => get(urls.tasks, {});
 }
 
 const requester = new Requester();
