@@ -1,6 +1,6 @@
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 import {
-  AnswerlessFlag, BasicAPI, Flag, PostAnswer, Register, ScoreRaw, User,
+  AnswerlessFlag, BasicAPI, PostAnswer, Register, Score,
 } from './types';
 
 // TODO This is not needed if we're not using sessions
@@ -35,7 +35,7 @@ class Requester {
 
   getAllFlags = (): Promise<BasicAPI<Array<AnswerlessFlag>>> => get(urls.flag, {});
 
-  getAllScores = (): Promise<BasicAPI<Array<ScoreRaw>>> => get(urls.score, {});
+  getAllScores = (): Promise<BasicAPI<Array<Score>>> => get(urls.score, {});
 
   postAnswer = (params: PostAnswer): Promise<BasicAPI<string>> => post(urls.score, params);
 

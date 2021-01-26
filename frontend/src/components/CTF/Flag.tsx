@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { AxiosError } from "axios";
 import React, { ReactElement, useCallback, useState } from 'react';
 import { Requester } from '../../utils/Requester';
 import { AnswerlessFlag, BasicAPI } from '../../utils/types';
@@ -49,12 +50,13 @@ export function Flag({ flag, id }: Props): ReactElement {
         <div className="alert alert-success">
           {e.data}
         </div>,
-      )).catch((e) => {
-        const error = e.response.data as BasicAPI<string>;
-        console.log('here', error);
+      )).catch((e: AxiosError<BasicAPI<string>>) => {
+        // const error = e.response.data as BasicAPI<string>;
+        // console.log('here', error);
+        // e.response?.data
         setStatus((
           <div className="alert alert-danger">
-            {error.msg}
+            {e.response?.data.msg}
           </div>));
         return null;
       });

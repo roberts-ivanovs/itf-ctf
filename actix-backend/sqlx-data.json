@@ -74,6 +74,57 @@
       ]
     }
   },
+  "549103a14ffdf871af5a77ffd485ca9651b8a75957abe543dbc5c8421f8ebab7": {
+    "query": "\n        SELECT *\n        FROM score\n        WHERE flag_id = ?\n        ORDER BY id\n            ",
+    "describe": {
+      "columns": [
+        {
+          "ordinal": 0,
+          "name": "id",
+          "type_info": {
+            "type": "LongLong",
+            "flags": {
+              "bits": 547
+            },
+            "char_set": 63,
+            "max_size": 20
+          }
+        },
+        {
+          "ordinal": 1,
+          "name": "flag_id",
+          "type_info": {
+            "type": "LongLong",
+            "flags": {
+              "bits": 4137
+            },
+            "char_set": 63,
+            "max_size": 20
+          }
+        },
+        {
+          "ordinal": 2,
+          "name": "user_id",
+          "type_info": {
+            "type": "LongLong",
+            "flags": {
+              "bits": 4137
+            },
+            "char_set": 63,
+            "max_size": 20
+          }
+        }
+      ],
+      "parameters": {
+        "Right": 1
+      },
+      "nullable": [
+        false,
+        false,
+        false
+      ]
+    }
+  },
   "596bf4d4e8f7e44292c34866c632b21ee3ccf95cee6b8d973465f0fed8dc629a": {
     "query": "\n        SELECT *\n        FROM score\n        ORDER BY id\n            ",
     "describe": {
@@ -272,6 +323,57 @@
         false,
         false,
         true
+      ]
+    }
+  },
+  "b7be00003bafb5cbaea8c455c3fe016afe27e44ced4d5bb8c69dc6e94f265349": {
+    "query": "\n        SELECT *\n        FROM score\n        WHERE user_id = ?\n        ORDER BY id\n            ",
+    "describe": {
+      "columns": [
+        {
+          "ordinal": 0,
+          "name": "id",
+          "type_info": {
+            "type": "LongLong",
+            "flags": {
+              "bits": 547
+            },
+            "char_set": 63,
+            "max_size": 20
+          }
+        },
+        {
+          "ordinal": 1,
+          "name": "flag_id",
+          "type_info": {
+            "type": "LongLong",
+            "flags": {
+              "bits": 4137
+            },
+            "char_set": 63,
+            "max_size": 20
+          }
+        },
+        {
+          "ordinal": 2,
+          "name": "user_id",
+          "type_info": {
+            "type": "LongLong",
+            "flags": {
+              "bits": 4137
+            },
+            "char_set": 63,
+            "max_size": 20
+          }
+        }
+      ],
+      "parameters": {
+        "Right": 1
+      },
+      "nullable": [
+        false,
+        false,
+        false
       ]
     }
   },

@@ -1,9 +1,9 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import { Requester } from '../../utils/Requester';
-import { BasicAPI, ScoreRaw } from '../../utils/types';
+import { BasicAPI, Score } from '../../utils/types';
 
 export function Scoreboard(): ReactElement {
-  const [entries, setEntries] = useState<Array<ScoreRaw>>([]);
+  const [entries, setEntries] = useState<Array<Score>>([]);
 
   useEffect(() => {
     async function getEntries(): Promise<void> {
@@ -23,11 +23,16 @@ export function Scoreboard(): ReactElement {
         </tr>
       </thead>
       <tbody>
-        {entries.map((e, num) => (
-          <tr key={e.id}>
+        {entries.sort((a, b) => b.score - a.score).map((e, num) => (
+          <tr key={e.user.id}>
             <th scope="row">{num + 1}</th>
-            <td>{e.userId}</td>
-            <td>{e.flagId}</td>
+            <td>{e.user.name}</td>
+            <td>
+              <abbr title={`Atbidlēja pareizi uz "${e.flags.map((i) => i.name).join('", "')}"`}>
+                {e.score}
+
+              </abbr>
+            </td>
           </tr>
         ))}
       </tbody>
