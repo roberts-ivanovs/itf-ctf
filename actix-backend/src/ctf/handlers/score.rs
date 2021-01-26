@@ -25,7 +25,7 @@ struct NewScoreWithAnswer {
 }
 
 #[post("")]
-async fn get_users_score(
+async fn create_score_entry(
     form: web::Json<NewScoreWithAnswer>,
     state: web::Data<AppState>,
 ) -> Result<impl Responder, Error> {
@@ -48,5 +48,5 @@ async fn get_users_score(
 
 pub fn init(cfg: &mut web::ServiceConfig) {
     cfg.service(get_score);
-    cfg.service(get_users_score);
+    cfg.service(create_score_entry);
 }

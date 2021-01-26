@@ -1,5 +1,7 @@
 import axios, { AxiosError } from 'axios';
-import { AnswerlessFlag, BasicAPI } from './types';
+import {
+  AnswerlessFlag, BasicAPI, Flag, PostAnswer, ScoreRaw, User,
+} from './types';
 
 // TODO This is not needed if we're not using sessions
 const apiClient = axios.create({
@@ -8,7 +10,9 @@ const apiClient = axios.create({
 });
 
 const urls = {
-  tasks: '/api/v1/ctf/flag',
+  flag: '/api/v1/ctf/flag',
+  score: '/api/v1/ctf/score',
+  users: '/api/v1/ctf/user',
 };
 
 async function get<T, B>(url: string, params: B): Promise<T> {
@@ -27,7 +31,15 @@ async function post<T, B>(url: string, params: B): Promise<T> {
 }
 
 class Requester {
-  getAllFlags = (): Promise<BasicAPI<Array<AnswerlessFlag>>> => get(urls.tasks, {});
+  getAllFlags = (): Promise<BasicAPI<Array<AnswerlessFlag>>> => get(urls.flag, {});
+
+  getAllScores = (): Promise<BasicAPI<Array<ScoreRaw>>> => get(urls.score, {});
+
+  postAnswer = (params: PostAnswer): Promise<BasicAPI<Array<User>>> => post(urls.score, params);
+
+  getUserByEmail = (email: string): Promise<BasicAPI<User>> => get(urls.users, { email });
+
+  // getFlag = (flagId: number): Promise<BasicAPI<Flag>> => get(`${urls.flag}${flagId}`, {});
 }
 
 const requester = new Requester();

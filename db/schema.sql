@@ -12,7 +12,8 @@ USE actix_todo;
 
 CREATE TABLE users (
     `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	`email` VARCHAR(256) NOT NULL UNIQUE
+	`email` VARCHAR(256) NOT NULL UNIQUE,
+	`name` VARCHAR(256) NOT NULL UNIQUE
 );
 
 CREATE TABLE flag (
@@ -25,10 +26,12 @@ CREATE TABLE flag (
 
 CREATE TABLE score (
     `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    -- Each user can guess a flag only once
 	`flag_id` BIGINT UNSIGNED NOT NULL,
     `user_id` BIGINT UNSIGNED NOT NULL,
     FOREIGN KEY (`flag_id`) REFERENCES `users`(`id`),
-    FOREIGN KEY (`user_id`) REFERENCES `flag`(`id`)
+    FOREIGN KEY (`user_id`) REFERENCES `flag`(`id`),
+    UNIQUE KEY `single_guess_per_user` (`flag_id`,`user_id`)
 );
 
 
@@ -39,10 +42,10 @@ VALUES
     ("uzdevums 3", "corrects", "task3.zip", "Apraksts nr 3 loti gars"),
     ("uzdevums 2", "asdf", "task2.zip", "Apraksts nr 2");
 
-INSERT INTO users (email)
+INSERT INTO users (name, email)
 VALUES
-    ("akmens@asd.lv"),
-    ("ivans@asd.lv");
+    ("Lielais Dukurs", "akmens@asd.lv"),
+    ("Mazais Bumbulis", "ivans@asd.lv");
 
 INSERT INTO score(flag_id, user_id)
 VALUES

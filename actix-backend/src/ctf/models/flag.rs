@@ -24,6 +24,7 @@ pub struct NewFlag {
 
 #[derive(FromRow, Clone, Serialize, Deserialize, Debug)]
 pub struct AnswerlessFlag {
+    pub id: SqlID,
     pub name: String,
     pub description: Option<String>,
     pub filepath: String,
@@ -34,7 +35,7 @@ pub trait IFlag {
     async fn flag_add(&self, form: &NewFlag) -> sqlx::Result<SqlID>;
     async fn flag_query(&self, id: SqlID) -> sqlx::Result<Flag>;
     async fn flag_query_without_answer(&self, id: SqlID) -> sqlx::Result<AnswerlessFlag>;
-    async fn flag_all(&self) -> sqlx::Result<Vec<Flag>>;
+    async fn flag_all_without_answer(&self) -> sqlx::Result<Vec<AnswerlessFlag>>;
 }
 
 #[async_trait]
@@ -70,11 +71,11 @@ impl IFlag for AppState {
         .await
     }
 
-    async fn flag_all(&self) -> sqlx::Result<Vec<Flag>> {
+    async fn flag_all_without_answer(&self) -> sqlx::Result<Vec<AnswerlessFlag>> {
         sqlx::query_as!(
-            Flag,
+            AnswerlessFlag,
             r#"
-        SELECT *
+        SELECT id, name, filepath, description
         FROM flag
         ORDER BY id
             "#,
@@ -87,7 +88,7 @@ impl IFlag for AppState {
         sqlx::query_as!(
             AnswerlessFlag,
             r#"
-        SELECT name, filepath, description
+        SELECT id, name, filepath, description
         FROM flag
         where id = ?
                 "#,

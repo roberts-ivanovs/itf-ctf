@@ -9,6 +9,7 @@ type SqlID = u64;
 pub struct User {
     pub id: SqlID,
     pub email: String,
+    pub name: String,
 }
 
 
@@ -19,20 +20,25 @@ pub struct Register {
 
 #[async_trait]
 pub trait IUser {
-    async fn user_add(&self, form: &Register) -> sqlx::Result<SqlID>;
+    async fn user_add(&self, form: &Register, name: String) -> sqlx::Result<SqlID>;
     async fn user_query(&self, id: SqlID) -> sqlx::Result<User>;
+    async fn user_email_exists(&self, email: String) -> sqlx::Result<bool>;
     async fn user_all(&self) -> sqlx::Result<Vec<User>>;
+}
+
+struct Exists {
+    count: i64
 }
 
 #[async_trait]
 impl IUser for AppState {
-    async fn user_add(&self, form: &Register) -> sqlx::Result<SqlID> {
+    async fn user_add(&self, form: &Register, name: String) -> sqlx::Result<SqlID> {
         let id = sqlx::query!(
             r#"
-        INSERT INTO users (email)
-        VALUES (?);
+        INSERT INTO users (email, name)
+        VALUES (?, ?);
                 "#,
-            form.email,
+            form.email, name
         )
         .execute(&self.sql)
         .await?
@@ -44,7 +50,7 @@ impl IUser for AppState {
         sqlx::query_as!(
             User,
             r#"
-        SELECT id, email
+        SELECT *
         FROM users
         where id = ?
                 "#,
@@ -58,12 +64,28 @@ impl IUser for AppState {
         sqlx::query_as!(
             User,
             r#"
-        SELECT id, email
+        SELECT *
         FROM users
         ORDER BY id
             "#,
         )
         .fetch_all(&self.sql)
         .await
+    }
+
+
+    async fn user_email_exists(&self, email: String) -> sqlx::Result<bool> {
+        let res = sqlx::query_as!(
+            Exists,
+            r#"
+        SELECT COUNT(*) as count
+        FROM users
+        where email = ?
+                "#,
+            email
+        )
+        .fetch_one(&self.sql)
+        .await?;
+        Ok(res.count > 0)
     }
 }

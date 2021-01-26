@@ -1,12 +1,12 @@
 import React, { ReactElement } from 'react';
 import { Footer } from './components/Base/Footer';
-import { Header } from './components/Base/Header';
+import { Navbar } from './components/Base/Navbar';
 import { Main } from './components/Base/Main';
 
 export function App(): ReactElement {
   return (
     <>
-      <Header />
+      <Navbar />
       <Main />
       <Footer />
     </>

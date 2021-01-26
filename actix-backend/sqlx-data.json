@@ -1,11 +1,23 @@
 {
   "db": "MySQL",
-  "06821124219eb5806f2a3fc31bd85044809e071c0a8aa67c56ef2a003069c6e2": {
-    "query": "\n        SELECT name, filepath, description\n        FROM flag\n        where id = ?\n                ",
+  "080b06e0c79aefa3a4f9c454fd081de71760511a1ad8e431e2d96145ffc23137": {
+    "query": "\n        SELECT id, name, filepath, description\n        FROM flag\n        where id = ?\n                ",
     "describe": {
       "columns": [
         {
           "ordinal": 0,
+          "name": "id",
+          "type_info": {
+            "type": "LongLong",
+            "flags": {
+              "bits": 547
+            },
+            "char_set": 63,
+            "max_size": 20
+          }
+        },
+        {
+          "ordinal": 1,
           "name": "name",
           "type_info": {
             "type": "VarString",
@@ -17,7 +29,7 @@
           }
         },
         {
-          "ordinal": 1,
+          "ordinal": 2,
           "name": "filepath",
           "type_info": {
             "type": "VarString",
@@ -29,7 +41,7 @@
           }
         },
         {
-          "ordinal": 2,
+          "ordinal": 3,
           "name": "description",
           "type_info": {
             "type": "VarString",
@@ -47,122 +59,8 @@
       "nullable": [
         false,
         false,
+        false,
         true
-      ]
-    }
-  },
-  "3203a92a559aca41690441a196fa47299917b4b04585d460c8a48d8bf19c48c4": {
-    "query": "\n        SELECT id, email\n        FROM users\n        ORDER BY id\n            ",
-    "describe": {
-      "columns": [
-        {
-          "ordinal": 0,
-          "name": "id",
-          "type_info": {
-            "type": "LongLong",
-            "flags": {
-              "bits": 547
-            },
-            "char_set": 63,
-            "max_size": 20
-          }
-        },
-        {
-          "ordinal": 1,
-          "name": "email",
-          "type_info": {
-            "type": "VarString",
-            "flags": {
-              "bits": 4101
-            },
-            "char_set": 224,
-            "max_size": 1024
-          }
-        }
-      ],
-      "parameters": {
-        "Right": 0
-      },
-      "nullable": [
-        false,
-        false
-      ]
-    }
-  },
-  "46d4e445a6a433823e2a10e9f63bcec332f50f6154999a77987d71bd989f607c": {
-    "query": "\n        SELECT *\n        FROM flag\n        ORDER BY id\n            ",
-    "describe": {
-      "columns": [
-        {
-          "ordinal": 0,
-          "name": "id",
-          "type_info": {
-            "type": "LongLong",
-            "flags": {
-              "bits": 547
-            },
-            "char_set": 63,
-            "max_size": 20
-          }
-        },
-        {
-          "ordinal": 1,
-          "name": "name",
-          "type_info": {
-            "type": "VarString",
-            "flags": {
-              "bits": 4101
-            },
-            "char_set": 224,
-            "max_size": 1024
-          }
-        },
-        {
-          "ordinal": 2,
-          "name": "answer",
-          "type_info": {
-            "type": "VarString",
-            "flags": {
-              "bits": 4097
-            },
-            "char_set": 224,
-            "max_size": 1024
-          }
-        },
-        {
-          "ordinal": 3,
-          "name": "description",
-          "type_info": {
-            "type": "VarString",
-            "flags": {
-              "bits": 0
-            },
-            "char_set": 224,
-            "max_size": 131060
-          }
-        },
-        {
-          "ordinal": 4,
-          "name": "filepath",
-          "type_info": {
-            "type": "VarString",
-            "flags": {
-              "bits": 4101
-            },
-            "char_set": 224,
-            "max_size": 1024
-          }
-        }
-      ],
-      "parameters": {
-        "Right": 0
-      },
-      "nullable": [
-        false,
-        false,
-        false,
-        true,
-        false
       ]
     }
   },
@@ -227,8 +125,8 @@
       "nullable": []
     }
   },
-  "99ebc509cc22087d10065815cfff0133d7f68763d039b1f9dacc7d5b6b975dd5": {
-    "query": "\n        SELECT id, email\n        FROM users\n        where id = ?\n                ",
+  "76cc792d056b418d8e0fbd299391d34c8aa358e475b28166e89aa48c248690cd": {
+    "query": "\n        SELECT *\n        FROM users\n        where id = ?\n                ",
     "describe": {
       "columns": [
         {
@@ -254,6 +152,18 @@
             "char_set": 224,
             "max_size": 1024
           }
+        },
+        {
+          "ordinal": 2,
+          "name": "name",
+          "type_info": {
+            "type": "VarString",
+            "flags": {
+              "bits": 4101
+            },
+            "char_set": 224,
+            "max_size": 1024
+          }
         }
       ],
       "parameters": {
@@ -261,8 +171,83 @@
       },
       "nullable": [
         false,
+        false,
         false
       ]
+    }
+  },
+  "9c828847a7829bd49cdac361c7abd2180decbd1959d05bb7e4b4f6fa5aa7d989": {
+    "query": "\n        SELECT id, name, filepath, description\n        FROM flag\n        ORDER BY id\n            ",
+    "describe": {
+      "columns": [
+        {
+          "ordinal": 0,
+          "name": "id",
+          "type_info": {
+            "type": "LongLong",
+            "flags": {
+              "bits": 547
+            },
+            "char_set": 63,
+            "max_size": 20
+          }
+        },
+        {
+          "ordinal": 1,
+          "name": "name",
+          "type_info": {
+            "type": "VarString",
+            "flags": {
+              "bits": 4101
+            },
+            "char_set": 224,
+            "max_size": 1024
+          }
+        },
+        {
+          "ordinal": 2,
+          "name": "filepath",
+          "type_info": {
+            "type": "VarString",
+            "flags": {
+              "bits": 4101
+            },
+            "char_set": 224,
+            "max_size": 1024
+          }
+        },
+        {
+          "ordinal": 3,
+          "name": "description",
+          "type_info": {
+            "type": "VarString",
+            "flags": {
+              "bits": 0
+            },
+            "char_set": 224,
+            "max_size": 131060
+          }
+        }
+      ],
+      "parameters": {
+        "Right": 0
+      },
+      "nullable": [
+        false,
+        false,
+        false,
+        true
+      ]
+    }
+  },
+  "a4054401a93784628bfc16dabff7e8ae85bf63fd1af0368f6e6b30311d451993": {
+    "query": "\n        INSERT INTO users (email, name)\n        VALUES (?, ?);\n                ",
+    "describe": {
+      "columns": [],
+      "parameters": {
+        "Right": 2
+      },
+      "nullable": []
     }
   },
   "c63bab5ffe5b5cde260c799936037aa9de9e8fe5f175ebc3d42681d51dfaf68d": {
@@ -342,22 +327,88 @@
       ]
     }
   },
+  "caaea629ede60cd69e119681556058706cb8d5a2304636ef4923d438a3eb3e6e": {
+    "query": "\n        SELECT COUNT(*) as count\n        FROM users\n        where email = ?\n                ",
+    "describe": {
+      "columns": [
+        {
+          "ordinal": 0,
+          "name": "count",
+          "type_info": {
+            "type": "LongLong",
+            "flags": {
+              "bits": 129
+            },
+            "char_set": 63,
+            "max_size": 21
+          }
+        }
+      ],
+      "parameters": {
+        "Right": 1
+      },
+      "nullable": [
+        false
+      ]
+    }
+  },
+  "e1ea188e7140cf531d3a94970017b2753471e06f6decf09e7b9f0d20f46b9015": {
+    "query": "\n        SELECT *\n        FROM users\n        ORDER BY id\n            ",
+    "describe": {
+      "columns": [
+        {
+          "ordinal": 0,
+          "name": "id",
+          "type_info": {
+            "type": "LongLong",
+            "flags": {
+              "bits": 547
+            },
+            "char_set": 63,
+            "max_size": 20
+          }
+        },
+        {
+          "ordinal": 1,
+          "name": "email",
+          "type_info": {
+            "type": "VarString",
+            "flags": {
+              "bits": 4101
+            },
+            "char_set": 224,
+            "max_size": 1024
+          }
+        },
+        {
+          "ordinal": 2,
+          "name": "name",
+          "type_info": {
+            "type": "VarString",
+            "flags": {
+              "bits": 4101
+            },
+            "char_set": 224,
+            "max_size": 1024
+          }
+        }
+      ],
+      "parameters": {
+        "Right": 0
+      },
+      "nullable": [
+        false,
+        false,
+        false
+      ]
+    }
+  },
   "f6788e0dfab659101490b03601296c2d228f10dd7ca49a7d980d609a59ac5d57": {
     "query": "\n        INSERT INTO flag (name, answer, filepath, description)\n        VALUES (?, ?, ?, ?);\n                ",
     "describe": {
       "columns": [],
       "parameters": {
         "Right": 4
-      },
-      "nullable": []
-    }
-  },
-  "fc77994ce6af4165b11bda58c8a264c478a06952bbce44565c65dc96a61d837d": {
-    "query": "\n        INSERT INTO users (email)\n        VALUES (?);\n                ",
-    "describe": {
-      "columns": [],
-      "parameters": {
-        "Right": 1
       },
       "nullable": []
     }

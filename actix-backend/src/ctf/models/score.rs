@@ -12,7 +12,9 @@ pub struct Score {
     pub user_id: SqlID,
 }
 
+
 #[derive(Serialize, Deserialize, Debug)]
+#[serde(rename_all = "camelCase")]
 pub struct NewScore {
     pub flag_id: SqlID,
     pub user_id: SqlID,

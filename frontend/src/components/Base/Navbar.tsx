@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 
-export function Header(): ReactElement {
+export function Navbar(): ReactElement {
   return (
     <div>
       Navbar
