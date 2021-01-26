@@ -1,8 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { AxiosError } from "axios";
+import { AxiosError } from 'axios';
 import React, { ReactElement, useCallback, useState } from 'react';
 import { Requester } from '../../utils/Requester';
 import { AnswerlessFlag, BasicAPI } from '../../utils/types';
+
+import style from './CTF.module.scss';
 
 interface Props {
   id: string;
@@ -66,35 +68,36 @@ export function Flag({ flag, id }: Props): ReactElement {
 
   return (
     <div className="modal fade" id={`modal${id}`} tabIndex={-1} role="dialog" aria-labelledby={`modalLabel${id}`} aria-hidden="true">
-      <div className="modal-dialog modal-dialog-centered" role="document">
+      <div className={`modal-dialog modal-dialog-centered ${style['modal-window-box']}`} role="document">
         <div className="modal-content">
 
           <div className="modal-header">
-            <h5 className="modal-title" id={`modalLabel${id}`}>{flag.name}</h5>
+            <h2 className="modal-title" id={`modalLabel${id}`}>{flag.name}</h2>
             <button type="button" className="close" data-dismiss={`modal${id}`} aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
 
           <div className="modal-body">
-            <div>
+            <div className={`${style['modal-form']}`}>
               {status}
-              <div>
+              <div className={`${style.description}`}>
                 {flag.description}
               </div>
-              <a href={`/common_static/${flag.filepath}`} download>
-                Lejupielādēt uzdevumu
+              <a className={`${style.download}`} href={`/common_static/${flag.filepath}`} download>
+                <i className="fas fa-file-download" />
+                <p>Lejupielādēt uzdevumu</p>
               </a>
               <div>
-                <div>
-                  e-pasts:
+                <div className={`${style.input}`}>
+                  <p>e-pasts:</p>
                   <input type="email" onChange={(e) => setEmail(e.target.value)} value={email} />
                 </div>
-                <div>
-                  atbilde:
+                <div className={`${style.input}`}>
+                  <p>atbilde:</p>
                   <input type="text" onChange={(e) => setAnswer(e.target.value)} value={answer} />
                 </div>
-                <button type="button" onClick={submit}>
+                <button className={`${style['submit-btn']}`} type="button" onClick={submit}>
                   Iesniegt atbild
                 </button>
               </div>
