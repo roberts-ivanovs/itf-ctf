@@ -22,15 +22,17 @@ export function CTF(): ReactElement {
       <h1>CTF Title here</h1>
       <div className={style['task-wrapper']}>
         {flags.map((e) => (
-          <div key={e.id} className={`${style['flag-box']}`} data-toggle="modal" data-target={`#modal${e.id}`}>
-            <div className={`${style['gears-icon']}`}>
-              <i className="fas fa-cogs" />
+          <>
+            <div key={e.id} className={`${style['flag-box']}`} data-toggle="modal" data-target={`#modal${e.id}`}>
+              <div className={`${style['gears-icon']}`}>
+                <i className="fas fa-cogs" />
+              </div>
+              <div className={`${style['flag-title']}`}>
+                <p>{e.name}</p>
+              </div>
             </div>
-            <div className={`${style['flag-title']}`}>
-              <p>{e.name}</p>
-            </div>
-            <Flag id={e.id.toString()} flag={e} />
-          </div>
+            <Flag key={`${e.id}modal`} id={e.id.toString()} flag={e} />
+          </>
         ))}
       </div>
     </div>
