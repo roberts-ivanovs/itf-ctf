@@ -23,7 +23,12 @@ export function CTF(): ReactElement {
       <div className={style['task-wrapper']}>
         {flags.map((e) => (
           <div key={e.id} className={`${style['flag-box']}`} data-toggle="modal" data-target={`#modal${e.id}`}>
-            <p>{e.name}</p>
+            <div className={`${style['gears-icon']}`}>
+              <i className="fas fa-cogs" />
+            </div>
+            <div className={`${style['flag-title']}`}>
+              <p>{e.name}</p>
+            </div>
             <Flag id={e.id.toString()} flag={e} />
           </div>
         ))}
