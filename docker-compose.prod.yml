@@ -1,6 +1,8 @@
 version: "3.7"
 
 services:
+  react:
+    command: sh ./dev.prod.sh
   api:
     container_name: itf-days-api-prod
     build:
@@ -12,3 +14,15 @@ services:
       - 80:80
     depends_on:
       - api
+  db:
+    image: mysql:5.7
+    container_name: itf-days-db
+    ports:
+      - 3306:3306
+    env_file: .env
+    volumes:
+      - mysql_data:/var/lib/mysql
+    command: mysqld --explicit_defaults_for_timestamp=1
+
+volumes:
+  mysql_data:
