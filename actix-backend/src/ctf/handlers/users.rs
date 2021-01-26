@@ -1,7 +1,12 @@
-use crate::{api::ApiResult, ctf::{models::users::{IUser, Register}}, how::Error, state::AppState};
+use crate::{
+    api::ApiResult,
+    ctf::models::users::{IUser, Register},
+    ctf::models::namebuilder::{INameBuilder},
+    how::Error,
+    state::AppState,
+};
 use actix_web::{get, post};
 use actix_web::{web, HttpRequest, Responder};
-
 
 #[get("/email/{email}")]
 async fn get_user_exists(
@@ -21,7 +26,7 @@ async fn create_users(
 ) -> Result<impl Responder, Error> {
     let form = form.into_inner();
     // Generate a random name
-    let random_name = form.email.clone();
+    let random_name = state.get_unique_name().await?;
     let id = state.user_add(&form, random_name).await?;
     let res = ApiResult::new().with_msg("ok").with_data(id);
     Ok(res.to_resp())

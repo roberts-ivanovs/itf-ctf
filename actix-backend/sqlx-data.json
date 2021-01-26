@@ -74,6 +74,31 @@
       ]
     }
   },
+  "21fb17f5c32add7d910440f4079f1509b4f867cde7bc0d4b5dd63aba35883055": {
+    "query": "\n        SELECT COUNT(*) as count\n        FROM adjactives\n        ORDER BY id\n            ",
+    "describe": {
+      "columns": [
+        {
+          "ordinal": 0,
+          "name": "count",
+          "type_info": {
+            "type": "LongLong",
+            "flags": {
+              "bits": 129
+            },
+            "char_set": 63,
+            "max_size": 21
+          }
+        }
+      ],
+      "parameters": {
+        "Right": 0
+      },
+      "nullable": [
+        false
+      ]
+    }
+  },
   "549103a14ffdf871af5a77ffd485ca9651b8a75957abe543dbc5c8421f8ebab7": {
     "query": "\n        SELECT *\n        FROM score\n        WHERE flag_id = ?\n        ORDER BY id\n            ",
     "describe": {
@@ -237,6 +262,44 @@
       ]
     }
   },
+  "93717839e219b318af9cf01df3ec78030db595d05121f19c0638e46471c4851e": {
+    "query": "\n                SELECT*\n                FROM adjactives\n                WHERE id = ?\n                ORDER BY id\n                ",
+    "describe": {
+      "columns": [
+        {
+          "ordinal": 0,
+          "name": "id",
+          "type_info": {
+            "type": "LongLong",
+            "flags": {
+              "bits": 547
+            },
+            "char_set": 63,
+            "max_size": 20
+          }
+        },
+        {
+          "ordinal": 1,
+          "name": "name",
+          "type_info": {
+            "type": "VarString",
+            "flags": {
+              "bits": 4101
+            },
+            "char_set": 224,
+            "max_size": 1024
+          }
+        }
+      ],
+      "parameters": {
+        "Right": 1
+      },
+      "nullable": [
+        false,
+        false
+      ]
+    }
+  },
   "96fcd8824a5b221139feaf4a09df869320d6d41427eba3f802a10fb92fc5a0a5": {
     "query": "\n        SELECT id as count\n        FROM users\n        where email = ?\n                ",
     "describe": {
@@ -326,6 +389,31 @@
       ]
     }
   },
+  "b1a052adc4fd7e05d99f4ee56ee552117e70de49f017ce380c0d1cbc58d85dec": {
+    "query": "\n        SELECT COUNT(*) as count\n        FROM users\n        ORDER BY id\n            ",
+    "describe": {
+      "columns": [
+        {
+          "ordinal": 0,
+          "name": "count",
+          "type_info": {
+            "type": "LongLong",
+            "flags": {
+              "bits": 129
+            },
+            "char_set": 63,
+            "max_size": 21
+          }
+        }
+      ],
+      "parameters": {
+        "Right": 0
+      },
+      "nullable": [
+        false
+      ]
+    }
+  },
   "b7be00003bafb5cbaea8c455c3fe016afe27e44ced4d5bb8c69dc6e94f265349": {
     "query": "\n        SELECT *\n        FROM score\n        WHERE user_id = ?\n        ORDER BY id\n            ",
     "describe": {
@@ -372,6 +460,44 @@
       },
       "nullable": [
         false,
+        false,
+        false
+      ]
+    }
+  },
+  "b7cc98977a983fca4faf3705a39d59d8be3bac0553bc50e7e27372b373e1041a": {
+    "query": "\n        SELECT*\n        FROM nouns\n        WHERE id = ?\n        ORDER BY id\n            ",
+    "describe": {
+      "columns": [
+        {
+          "ordinal": 0,
+          "name": "id",
+          "type_info": {
+            "type": "LongLong",
+            "flags": {
+              "bits": 547
+            },
+            "char_set": 63,
+            "max_size": 20
+          }
+        },
+        {
+          "ordinal": 1,
+          "name": "name",
+          "type_info": {
+            "type": "VarString",
+            "flags": {
+              "bits": 4101
+            },
+            "char_set": 224,
+            "max_size": 1024
+          }
+        }
+      ],
+      "parameters": {
+        "Right": 1
+      },
+      "nullable": [
         false,
         false
       ]
@@ -501,6 +627,31 @@
       "nullable": [
         false,
         false,
+        false
+      ]
+    }
+  },
+  "ec80e2afa0001f632313e3cde55dde6ee41e26fc012ea1d8bd2f245ce176932c": {
+    "query": "\n        SELECT COUNT(*) as count\n        FROM nouns\n        ORDER BY id\n            ",
+    "describe": {
+      "columns": [
+        {
+          "ordinal": 0,
+          "name": "count",
+          "type_info": {
+            "type": "LongLong",
+            "flags": {
+              "bits": 129
+            },
+            "char_set": 63,
+            "max_size": 21
+          }
+        }
+      ],
+      "parameters": {
+        "Right": 0
+      },
+      "nullable": [
         false
       ]
     }
