@@ -9,7 +9,7 @@ async fn get_user_exists(
     state: web::Data<AppState>,
 ) -> Result<impl Responder, Error> {
     let email = path.into_inner().0;
-    let exists = &state.user_email_exists(email).await?;
+    let exists = &state.user_by_email(email).await?;
     let res = ApiResult::new().with_msg("ok").with_data(exists);
     Ok(res.to_resp())
 }

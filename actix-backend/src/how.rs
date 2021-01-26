@@ -11,6 +11,8 @@ pub enum Error {
     Sqlx(#[from] SqlxError),
     #[error("IO error: {0}")]
     Startup(#[from] io::Error),
+    #[error("Invalid email!")]
+    EmailError,
 }
 
 impl ResponseError for Error {

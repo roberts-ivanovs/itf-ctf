@@ -1,6 +1,6 @@
 export interface BasicAPI<T> {
   status: number,
-  message: string,
+  msg: string,
   data: T
 }
 

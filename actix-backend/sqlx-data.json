@@ -1,5 +1,15 @@
 {
   "db": "MySQL",
+  "009738dc37634eb2efe25ab6f7513ba68ada8dfdc981dcaea640c95e9f748c48": {
+    "query": "\n                INSERT INTO users (email, name)\n                VALUES (?, ?);\n                ",
+    "describe": {
+      "columns": [],
+      "parameters": {
+        "Right": 2
+      },
+      "nullable": []
+    }
+  },
   "080b06e0c79aefa3a4f9c454fd081de71760511a1ad8e431e2d96145ffc23137": {
     "query": "\n        SELECT id, name, filepath, description\n        FROM flag\n        where id = ?\n                ",
     "describe": {
@@ -176,6 +186,31 @@
       ]
     }
   },
+  "96fcd8824a5b221139feaf4a09df869320d6d41427eba3f802a10fb92fc5a0a5": {
+    "query": "\n        SELECT id as count\n        FROM users\n        where email = ?\n                ",
+    "describe": {
+      "columns": [
+        {
+          "ordinal": 0,
+          "name": "count",
+          "type_info": {
+            "type": "LongLong",
+            "flags": {
+              "bits": 547
+            },
+            "char_set": 63,
+            "max_size": 20
+          }
+        }
+      ],
+      "parameters": {
+        "Right": 1
+      },
+      "nullable": [
+        false
+      ]
+    }
+  },
   "9c828847a7829bd49cdac361c7abd2180decbd1959d05bb7e4b4f6fa5aa7d989": {
     "query": "\n        SELECT id, name, filepath, description\n        FROM flag\n        ORDER BY id\n            ",
     "describe": {
@@ -238,16 +273,6 @@
         false,
         true
       ]
-    }
-  },
-  "a4054401a93784628bfc16dabff7e8ae85bf63fd1af0368f6e6b30311d451993": {
-    "query": "\n        INSERT INTO users (email, name)\n        VALUES (?, ?);\n                ",
-    "describe": {
-      "columns": [],
-      "parameters": {
-        "Right": 2
-      },
-      "nullable": []
     }
   },
   "c63bab5ffe5b5cde260c799936037aa9de9e8fe5f175ebc3d42681d51dfaf68d": {
@@ -323,31 +348,6 @@
         false,
         false,
         true,
-        false
-      ]
-    }
-  },
-  "caaea629ede60cd69e119681556058706cb8d5a2304636ef4923d438a3eb3e6e": {
-    "query": "\n        SELECT COUNT(*) as count\n        FROM users\n        where email = ?\n                ",
-    "describe": {
-      "columns": [
-        {
-          "ordinal": 0,
-          "name": "count",
-          "type_info": {
-            "type": "LongLong",
-            "flags": {
-              "bits": 129
-            },
-            "char_set": 63,
-            "max_size": 21
-          }
-        }
-      ],
-      "parameters": {
-        "Right": 1
-      },
-      "nullable": [
         false
       ]
     }

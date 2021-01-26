@@ -1,7 +1,8 @@
+use regex::Regex;
 use serde::{Deserialize, Serialize};
 use sqlx::FromRow;
 
-use crate::state::AppState;
+use crate::{how::Error, state::AppState};
 
 type SqlID = u64;
 
@@ -20,30 +21,39 @@ pub struct Register {
 
 #[async_trait]
 pub trait IUser {
-    async fn user_add(&self, form: &Register, name: String) -> sqlx::Result<SqlID>;
+    // async fn user_add(&self, form: &Register, name: String) -> sqlx::Result<SqlID>;
+    async fn user_add(&self, form: &Register, name: String) -> Result<SqlID, Error>;
     async fn user_query(&self, id: SqlID) -> sqlx::Result<User>;
-    async fn user_email_exists(&self, email: String) -> sqlx::Result<bool>;
+    async fn user_by_email(&self, email: String) -> sqlx::Result<SqlID>;
     async fn user_all(&self) -> sqlx::Result<Vec<User>>;
 }
 
 struct Exists {
-    count: i64
+    count: SqlID
+}
+
+lazy_static! {
+    static ref EMAIL_REGEX: Regex = Regex::new(r"^([a-z0-9_+]([a-z0-9_+.]*[a-z0-9_+])?)@([a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,6})").unwrap();
 }
 
 #[async_trait]
 impl IUser for AppState {
-    async fn user_add(&self, form: &Register, name: String) -> sqlx::Result<SqlID> {
-        let id = sqlx::query!(
-            r#"
-        INSERT INTO users (email, name)
-        VALUES (?, ?);
+    async fn user_add(&self, form: &Register, name: String) -> Result<SqlID, Error> {
+        if EMAIL_REGEX.is_match(&name) {
+            let id = sqlx::query!(
+                r#"
+                INSERT INTO users (email, name)
+                VALUES (?, ?);
                 "#,
-            form.email, name
-        )
-        .execute(&self.sql)
-        .await?
-        .last_insert_id();
-        Ok(id)
+                form.email, name
+            )
+            .execute(&self.sql)
+            .await?
+            .last_insert_id();
+            Ok(id)
+        } else {
+            Err(Error::EmailError)
+        }
     }
 
     async fn user_query(&self, id: SqlID) -> sqlx::Result<User> {
@@ -74,11 +84,11 @@ impl IUser for AppState {
     }
 
 
-    async fn user_email_exists(&self, email: String) -> sqlx::Result<bool> {
+    async fn user_by_email(&self, email: String) -> sqlx::Result<SqlID> {
         let res = sqlx::query_as!(
             Exists,
             r#"
-        SELECT COUNT(*) as count
+        SELECT id as count
         FROM users
         where email = ?
                 "#,
@@ -86,6 +96,6 @@ impl IUser for AppState {
         )
         .fetch_one(&self.sql)
         .await?;
-        Ok(res.count > 0)
+        Ok(res.count)
     }
 }
