@@ -39,7 +39,9 @@ lazy_static! {
 #[async_trait]
 impl IUser for AppState {
     async fn user_add(&self, form: &Register, name: String) -> Result<SqlID, Error> {
-        if EMAIL_REGEX.is_match(&name) {
+
+        info!("Attempting to create a new user {:#?}", form);
+        if EMAIL_REGEX.is_match(&form.email) {
             let id = sqlx::query!(
                 r#"
                 INSERT INTO users (email, name)
@@ -97,5 +99,26 @@ impl IUser for AppState {
         .fetch_one(&self.sql)
         .await?;
         Ok(res.count)
+    }
+}
+
+
+#[cfg(test)]
+mod test{
+
+    use super::*;
+
+    #[test]
+    fn email_regex_correct() {
+        let email1 = "s8_ivanov_r@venta.lv";
+        let res = EMAIL_REGEX.is_match(email1);
+        assert!(res);
+    }
+
+    #[test]
+    fn email_regex_incorrect() {
+        let email1 = "s8_ivanov_r.venta.lv";
+        let res = EMAIL_REGEX.is_match(email1);
+        assert!(!res);
     }
 }

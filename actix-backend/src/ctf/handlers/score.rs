@@ -31,7 +31,7 @@ async fn get_score(_req: HttpRequest, state: web::Data<AppState>) -> Result<impl
     for f in flags.iter() {
         let scores = &state.score_for_flag(f.id).await?;
         // Calculate the 1/n score for every flag based on the score count (create a hash map)
-        score_mapping.insert(f.id, 1.0 / scores.len() as f64);
+        score_mapping.insert(f.id, 1000.0 / scores.len() as f64);
     }
 
     // ---------- STAGE 2 ---------- //

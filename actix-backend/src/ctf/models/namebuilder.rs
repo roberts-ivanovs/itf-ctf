@@ -78,8 +78,9 @@ impl INameBuilder for AppState {
         .fetch_one(&self.sql)
         .await?;
         let mut adjacives = String::new();
-        let mut current_adjactive_id = adjactive_count.count;
-        while current_adjactive_id <= 1 {
+        let mut ucnt = user_count.count;
+        let mut next_adjactive_id = ucnt % adjactive_count.count;
+        while next_adjactive_id > 0 {
             let adjactive = sqlx::query_as!(
                 Namebuilder,
                 r#"
@@ -88,7 +89,7 @@ impl INameBuilder for AppState {
                 WHERE id = ?
                 ORDER BY id
                 "#,
-                current_adjactive_id
+                next_adjactive_id
             )
             .fetch_one(&self.sql)
             .await
@@ -96,11 +97,12 @@ impl INameBuilder for AppState {
                 id: 0,
                 name: "Anonynmous".to_owned(),
             });
-            current_adjactive_id -= user_count.count % current_adjactive_id;
+            ucnt -= next_adjactive_id;
+            next_adjactive_id = ucnt % adjactive_count.count;
             adjacives += " ";
             adjacives += &adjactive.name;
         }
 
-        Ok(format!("{} {}", adjacives, noun))
+        Ok(format!("{} {} |{}", adjacives, noun, user_count.count))
     }
 }
