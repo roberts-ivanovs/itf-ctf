@@ -29,7 +29,7 @@ impl IScore for AppState {
     async fn score_add(&self, form: &NewScore) -> sqlx::Result<SqlID> {
         let id = sqlx::query!(
             r#"
-        INSERT INTO flag_user_mapping (flag_id, user_id)
+        INSERT INTO score (flag_id, user_id)
         VALUES (?, ?);
                 "#,
             form.flag_id,
@@ -46,7 +46,7 @@ impl IScore for AppState {
             Score,
             r#"
         SELECT *
-        FROM flag_user_mapping
+        FROM score
         ORDER BY id
             "#,
         )

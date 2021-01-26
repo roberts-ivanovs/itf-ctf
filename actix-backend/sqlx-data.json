@@ -1,5 +1,56 @@
 {
   "db": "MySQL",
+  "06821124219eb5806f2a3fc31bd85044809e071c0a8aa67c56ef2a003069c6e2": {
+    "query": "\n        SELECT name, filepath, description\n        FROM flag\n        where id = ?\n                ",
+    "describe": {
+      "columns": [
+        {
+          "ordinal": 0,
+          "name": "name",
+          "type_info": {
+            "type": "VarString",
+            "flags": {
+              "bits": 4101
+            },
+            "char_set": 224,
+            "max_size": 1024
+          }
+        },
+        {
+          "ordinal": 1,
+          "name": "filepath",
+          "type_info": {
+            "type": "VarString",
+            "flags": {
+              "bits": 4101
+            },
+            "char_set": 224,
+            "max_size": 1024
+          }
+        },
+        {
+          "ordinal": 2,
+          "name": "description",
+          "type_info": {
+            "type": "VarString",
+            "flags": {
+              "bits": 0
+            },
+            "char_set": 224,
+            "max_size": 131060
+          }
+        }
+      ],
+      "parameters": {
+        "Right": 1
+      },
+      "nullable": [
+        false,
+        false,
+        true
+      ]
+    }
+  },
   "3203a92a559aca41690441a196fa47299917b4b04585d460c8a48d8bf19c48c4": {
     "query": "\n        SELECT id, email\n        FROM users\n        ORDER BY id\n            ",
     "describe": {
@@ -38,8 +89,85 @@
       ]
     }
   },
-  "3ef4e27556b6cb4a95e5173cc693388e2cdeda516dc6bf86455837d1f3d72699": {
-    "query": "\n        SELECT *\n        FROM flag_user_mapping\n        ORDER BY id\n            ",
+  "46d4e445a6a433823e2a10e9f63bcec332f50f6154999a77987d71bd989f607c": {
+    "query": "\n        SELECT *\n        FROM flag\n        ORDER BY id\n            ",
+    "describe": {
+      "columns": [
+        {
+          "ordinal": 0,
+          "name": "id",
+          "type_info": {
+            "type": "LongLong",
+            "flags": {
+              "bits": 547
+            },
+            "char_set": 63,
+            "max_size": 20
+          }
+        },
+        {
+          "ordinal": 1,
+          "name": "name",
+          "type_info": {
+            "type": "VarString",
+            "flags": {
+              "bits": 4101
+            },
+            "char_set": 224,
+            "max_size": 1024
+          }
+        },
+        {
+          "ordinal": 2,
+          "name": "answer",
+          "type_info": {
+            "type": "VarString",
+            "flags": {
+              "bits": 4097
+            },
+            "char_set": 224,
+            "max_size": 1024
+          }
+        },
+        {
+          "ordinal": 3,
+          "name": "description",
+          "type_info": {
+            "type": "VarString",
+            "flags": {
+              "bits": 0
+            },
+            "char_set": 224,
+            "max_size": 131060
+          }
+        },
+        {
+          "ordinal": 4,
+          "name": "filepath",
+          "type_info": {
+            "type": "VarString",
+            "flags": {
+              "bits": 4101
+            },
+            "char_set": 224,
+            "max_size": 1024
+          }
+        }
+      ],
+      "parameters": {
+        "Right": 0
+      },
+      "nullable": [
+        false,
+        false,
+        false,
+        true,
+        false
+      ]
+    }
+  },
+  "596bf4d4e8f7e44292c34866c632b21ee3ccf95cee6b8d973465f0fed8dc629a": {
+    "query": "\n        SELECT *\n        FROM score\n        ORDER BY id\n            ",
     "describe": {
       "columns": [
         {
@@ -89,68 +217,14 @@
       ]
     }
   },
-  "46d4e445a6a433823e2a10e9f63bcec332f50f6154999a77987d71bd989f607c": {
-    "query": "\n        SELECT *\n        FROM flag\n        ORDER BY id\n            ",
+  "72276124458bab8b7c7cad958d7b24f9c7cd9e8019ae8d99fcb3870eecf51603": {
+    "query": "\n        INSERT INTO score (flag_id, user_id)\n        VALUES (?, ?);\n                ",
     "describe": {
-      "columns": [
-        {
-          "ordinal": 0,
-          "name": "id",
-          "type_info": {
-            "type": "LongLong",
-            "flags": {
-              "bits": 547
-            },
-            "char_set": 63,
-            "max_size": 20
-          }
-        },
-        {
-          "ordinal": 1,
-          "name": "name",
-          "type_info": {
-            "type": "VarString",
-            "flags": {
-              "bits": 4101
-            },
-            "char_set": 224,
-            "max_size": 1024
-          }
-        },
-        {
-          "ordinal": 2,
-          "name": "answer",
-          "type_info": {
-            "type": "VarString",
-            "flags": {
-              "bits": 4097
-            },
-            "char_set": 224,
-            "max_size": 1024
-          }
-        },
-        {
-          "ordinal": 3,
-          "name": "filepath",
-          "type_info": {
-            "type": "VarString",
-            "flags": {
-              "bits": 4101
-            },
-            "char_set": 224,
-            "max_size": 1024
-          }
-        }
-      ],
+      "columns": [],
       "parameters": {
-        "Right": 0
+        "Right": 2
       },
-      "nullable": [
-        false,
-        false,
-        false,
-        false
-      ]
+      "nullable": []
     }
   },
   "99ebc509cc22087d10065815cfff0133d7f68763d039b1f9dacc7d5b6b975dd5": {
@@ -189,16 +263,6 @@
         false,
         false
       ]
-    }
-  },
-  "a86a2a53aa68c4eee77b9a909fb63937d5636e39cee6b35015120bda3df95055": {
-    "query": "\n        INSERT INTO flag_user_mapping (flag_id, user_id)\n        VALUES (?, ?);\n                ",
-    "describe": {
-      "columns": [],
-      "parameters": {
-        "Right": 2
-      },
-      "nullable": []
     }
   },
   "c63bab5ffe5b5cde260c799936037aa9de9e8fe5f175ebc3d42681d51dfaf68d": {
@@ -243,6 +307,18 @@
         },
         {
           "ordinal": 3,
+          "name": "description",
+          "type_info": {
+            "type": "VarString",
+            "flags": {
+              "bits": 0
+            },
+            "char_set": 224,
+            "max_size": 131060
+          }
+        },
+        {
+          "ordinal": 4,
           "name": "filepath",
           "type_info": {
             "type": "VarString",
@@ -261,16 +337,17 @@
         false,
         false,
         false,
+        true,
         false
       ]
     }
   },
-  "cfde35fe0df5b49800f39ed86da5896612bf37d2ce024d28b515a5bc84d7999a": {
-    "query": "\n        INSERT INTO flag (name, answer, filepath)\n        VALUES (?, ?, ?);\n                ",
+  "f6788e0dfab659101490b03601296c2d228f10dd7ca49a7d980d609a59ac5d57": {
+    "query": "\n        INSERT INTO flag (name, answer, filepath, description)\n        VALUES (?, ?, ?, ?);\n                ",
     "describe": {
       "columns": [],
       "parameters": {
-        "Right": 3
+        "Right": 4
       },
       "nullable": []
     }
