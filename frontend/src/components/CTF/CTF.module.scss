@@ -23,7 +23,7 @@
                 font-weight: bold;
             }
 
-            .modal-form {
+            .modal-form-wrapper {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
@@ -37,8 +37,12 @@
                     display: flex;
                     flex-direction: row;
                     padding: 1rem;
+                    margin-bottom: 2rem;
+                    margin-top: 2rem;
                     border-radius: 1rem;
-                    background-color: #2B2B2B;
+                    align-items: center;
+                    color: base.$base-dark;
+                    background-color: base.$accent-one;
 
                     i {
                         padding-right: 1rem;
@@ -46,12 +50,61 @@
                     }
                 }
 
-                .input {
-
+                .download:hover {
+                    background-color: base.$base-dark;
+                    color: base.$accent-one;
                 }
 
-                .submit-btn {
+                .input {
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    margin-bottom: 1rem;
 
+                    p {
+                        padding-right: 2rem;
+                    }
+                }
+
+                .btn-wrapper {
+                    display: flex;
+                    flex-direction: row-reverse;
+
+                    .submit-btn {
+                        background-color: base.$accent-two;
+                        color: base.$base-dark;
+                        padding: 0.5rem;
+                        margin-top: 1rem;
+                        border-radius: 0.5rem;
+                        outline: 0;
+                        border: 0;
+                    }
+
+                    .submit-btn:hover {
+                        background-color: base.$base-dark;
+                        color: base.$accent-two;
+                    }
+                }
+            }
+
+            .modal-footer-wrapper {
+                .save {
+                    color: base.$base-dark;
+                    background-color: base.$accent-one;
+                }
+
+                .save:hover {
+                    background-color: base.$base-dark;
+                    color: base.$accent-one;
+                }
+
+                .close {
+                    color: base.$base-bg;
+                    background-color: base.$accent-gray;
+                }
+
+                .close:hover {
+                    color: base.$base-dark;
                 }
             }
         }

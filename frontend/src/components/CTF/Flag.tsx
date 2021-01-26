@@ -73,13 +73,13 @@ export function Flag({ flag, id }: Props): ReactElement {
 
           <div className="modal-header">
             <h2 className="modal-title" id={`modalLabel${id}`}>{flag.name}</h2>
-            <button type="button" className="close" data-dismiss={`modal${id}`} aria-label="Close">
+            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
 
           <div className="modal-body">
-            <div className={`${style['modal-form']}`}>
+            <div className={`${style['modal-form-wrapper']}`}>
               {status}
               <div className={`${style.description}`}>
                 {flag.description}
@@ -97,16 +97,17 @@ export function Flag({ flag, id }: Props): ReactElement {
                   <p>atbilde:</p>
                   <input type="text" onChange={(e) => setAnswer(e.target.value)} value={answer} />
                 </div>
-                <button className={`${style['submit-btn']}`} type="button" onClick={submit}>
-                  Iesniegt atbild
-                </button>
+                <div className={`${style['btn-wrapper']}`}>
+                  <button className={`${style['submit-btn']}`} type="button" onClick={submit}>
+                    Iesniegt atbild
+                  </button>
+                </div>
               </div>
             </div>
           </div>
 
-          <div className="modal-footer">
-            <button type="button" className="btn btn-primary">Save changes</button>
-            <button type="button" className="btn btn-secondary" data-dismiss={`modal${id}`}>Close</button>
+          <div className={`modal-footer ${style['modal-footer-wrapper']}`}>
+            <button type="button" className={`btn ${style.close}`} data-dismiss="modal">Close</button>
           </div>
 
         </div>
