@@ -25,47 +25,8 @@ struct ScoreWithObjects {
 async fn get_score(_req: HttpRequest, state: web::Data<AppState>) -> Result<impl Responder, Error> {
     // ---------- STAGE 1 ---------- //
     // Get all flags
-    let flags = &state.flag_all_without_answer().await?;
-    // Get all scores for every flag
-    let mut score_mapping = HashMap::new();
-    for f in flags.iter() {
-        let scores = &state.score_for_flag(f.id).await?;
-        // Calculate the 1/n score for every flag based on the score count (create a hash map)
-        score_mapping.insert(f.id, scores.len());
-    }
-
-    // ---------- STAGE 2 ---------- //
-    // Get all users
-    let users = &state.user_all().await?;
-    // Get scores for every user
-    let mut result: Vec<ScoreWithObjects> = Vec::new();
-    for u in users.iter() {
-        let scores = &state.score_for_user(u.id).await?;
-
-        let mut user_score = 0.0;
-        for item in scores {
-            let flag = &state.flag_query(item.flag_id).await?;
-            user_score += score_mapping.get(&flag.id).unwrap_or(0);
-        }
-
-        // let accumulated_flags: Vec<Flag> = scores
-        //     .iter()
-        //     .map(|e| async { &state.flag_query(e.flag_id).await? }).collect();
-        for item in accumulated_flags {
-
-        }
-            // .fold(0, |acc, item| {
-            //     let resp = item.await?;
-            //     acc += score_mapping.get(res)
-            // });
-        // Create the response ovject
-        // result.append(ScoreWithObjects {
-        //     user: u,
-        //     flags:
-        // })
-    }
-
-    let res = ApiResult::new().with_msg("ok").with_data(result);
+    let users = &state.score_all().await?;
+    let res = ApiResult::new().with_msg("ok").with_data(users);
     Ok(res.to_resp())
 }
 
