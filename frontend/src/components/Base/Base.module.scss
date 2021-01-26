@@ -1,0 +1,15 @@
+@use '../../utils/base.scss';
+
+.navbar-wrapper {
+    height: 5rem;
+    background-color: base.$base-dark;
+    color: white;
+    margin-bottom: 5rem;
+}
+
+.footer-wrapper {
+    height: 5rem;
+    background-color: base.$base-dark;
+    color: white;
+    margin-top: 5rem;
+}
