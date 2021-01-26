@@ -4,6 +4,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    h1 {
+        margin-top: 3rem;
+        font-weight: bold;
+    }
 
     .task-wrapper {
         display: flex;
@@ -12,6 +16,46 @@
         justify-content: center;
         width: 70rem;
 
+        .modal-window-box {
+            max-width: 60rem;
+
+            h2 {
+                font-weight: bold;
+            }
+
+            .modal-form {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+
+                .description {
+                    padding-top: 1rem;
+                    padding-bottom: 1rem;
+                }
+
+                .download {
+                    display: flex;
+                    flex-direction: row;
+                    padding: 1rem;
+                    border-radius: 1rem;
+                    background-color: #2B2B2B;
+
+                    i {
+                        padding-right: 1rem;
+                        font-size: 2rem;
+                    }
+                }
+
+                .input {
+
+                }
+
+                .submit-btn {
+
+                }
+            }
+        }
+
         .flag-box {
             width: 17rem;
             min-height: 17rem;
@@ -19,25 +63,35 @@
             margin: 2rem;
             border-radius: 1rem;
             background-color: base.$accent-gray;
-            // border: 0.5rem solid base.$accent-one;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            border-left: 0.3rem solid base.$accent-gray;
+            border-right: 0.3rem solid base.$accent-gray;
+            border-top: 0.3rem solid base.$accent-gray;
 
             p {
                 padding: 1rem;
                 font-weight: bold;
-                font-size: 1rem;
+                font-size: 1.5rem;
                 text-align: center;
             }
 
             .gears-icon {
-
+                flex: 3;
+                font-size: 10rem;
+                color: base.$accent-two;
             }
 
             .flag-title {
-
+                flex: 1;
+                width: 100%;
+                border-radius: 0 0 1rem 1rem;
+                background-color: base.$accent-two;
+                border-bottom: 0.3rem solid #2B2B2B;
+                border-left: 0.3rem solid #2B2B2B;
+                border-right: 0.3rem solid #2B2B2B;
             }
         }
     }
