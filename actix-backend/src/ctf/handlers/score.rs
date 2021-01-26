@@ -30,18 +30,17 @@ async fn create_score_entry(
     state: web::Data<AppState>,
 ) -> Result<impl Responder, Error> {
     // Fetch the flag
-    let flag = &state.flag_query(form.metadata.user_id).await?;
+    let flag = &state.flag_query(form.metadata.flag_id).await?;
     // Compare the answers
     let res = match flag.answer == form.answer {
         true => {
             // Save answer
             &state.score_add(&form.metadata).await?;
-            ApiResult::new().with_msg("ok")
+            ApiResult::new().with_msg("ok").with_data("Correct!")
         }
         false => ApiResult::new()
-            .with_msg("ok")
-            .code(400)
-            .with_data("Incorrect answer!"),
+            .with_msg("Incorrect answer!")
+            .code(400),
     };
     Ok(res.to_resp())
 }
