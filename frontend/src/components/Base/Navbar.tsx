@@ -9,16 +9,12 @@ export function Navbar(): ReactElement {
       <NavLink
         exact
         to="/"
-        activeClassName="btn btn-danger"
-        className="btn btn-primary"
       >
         Home
       </NavLink>
       <NavLink
         exact
         to="/score"
-        activeClassName="btn btn-danger"
-        className="btn btn-primary"
       >
         Score
       </NavLink>
