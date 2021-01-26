@@ -17,7 +17,7 @@ use serde::{Deserialize, Serialize};
 #[derive(Serialize, Deserialize, Debug)]
 struct ScoreWithObjects {
     user: User,
-    falgs: Vec<Flag>,
+    flags: Vec<Flag>,
     score: f64,
 }
 
@@ -25,8 +25,41 @@ struct ScoreWithObjects {
 async fn get_score(_req: HttpRequest, state: web::Data<AppState>) -> Result<impl Responder, Error> {
     // ---------- STAGE 1 ---------- //
     // Get all flags
-    let users = &state.score_all().await?;
-    let res = ApiResult::new().with_msg("ok").with_data(users);
+    let flags = &state.flag_all_without_answer().await?;
+    // Get all scores for every flag
+    let mut score_mapping = HashMap::new();
+    for f in flags.iter() {
+        let scores = &state.score_for_flag(f.id).await?;
+        // Calculate the 1/n score for every flag based on the score count (create a hash map)
+        score_mapping.insert(f.id, 1.0 / scores.len() as f64);
+    }
+
+    // ---------- STAGE 2 ---------- //
+    // Get all users
+    let users = state.user_all().await?;
+    // Get scores for every user
+    let mut result: Vec<ScoreWithObjects> = Vec::new();
+    for user in users.into_iter() {
+        let scores = &state.score_for_user(user.id).await?;
+
+        let mut user_score: f64 = 0.0;
+        let mut user_flags = vec![];
+        for item in scores {
+            let flag = state.flag_query(item.flag_id).await?;
+            user_score += score_mapping.get(&flag.id).unwrap_or(&0.0);
+            user_flags.push(flag);
+        }
+
+        // Create the response ovject
+        let score_obj = ScoreWithObjects {
+            user: user,
+            flags: user_flags,
+            score: user_score,
+        };
+        result.push(score_obj)
+    }
+
+    let res = ApiResult::new().with_msg("ok").with_data(result);
     Ok(res.to_resp())
 }
 

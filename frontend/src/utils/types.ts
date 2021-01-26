@@ -30,16 +30,10 @@ interface ScoreRawCreate {
   userId: number,
 }
 
-export interface ScoreRaw {
-  id: number,
-  flagId: number,
-  userId: number,
-}
-
 export interface Score {
-  flagId: Flag,
-  userId: User,
-  id: number,
+  user: User,
+  flags: Array<AnswerlessFlag>,
+  score: number,
 }
 
 export interface PostAnswer {
