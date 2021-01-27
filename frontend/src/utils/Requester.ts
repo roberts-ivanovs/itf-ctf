@@ -23,6 +23,13 @@ async function get<T, B>(url: string, params: B): Promise<T> {
   return response;
 }
 
+async function del<T, B>(url: string, params: B): Promise<T> {
+  const response = await apiClient
+    .delete<T>(url, { params })
+    .then((val) => val.data);
+  return response;
+}
+
 async function patch<T, B>(url: string, params: B): Promise<T> {
   const response = await apiClient
     .patch<T>(url, params)
@@ -45,7 +52,11 @@ class Requester {
 
   updateFlag = (flagId:number, flag: FinalUpdateFlag): Promise<void> => patch(`${urls.flag}/${flagId}`, flag);
 
+  createFlag = (flag: FinalUpdateFlag): Promise<void> => post(urls.flag, flag);
+
   getSingleFlag = (flagId: number): Promise<BasicAPI<Flag>> => get(`${urls.flag}/single/${flagId}`, {});
+
+  deleteFlag = (flagId: number): Promise<void> => del(`${urls.flag}/${flagId}`, {});
 
   getAllFlagsWithAnswers = (): Promise<BasicAPI<Array<Flag>>> => get(urls.answerflag, {});
 

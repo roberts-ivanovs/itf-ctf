@@ -46,6 +46,7 @@ pub trait IFlag {
     async fn flag_add(&self, form: &NewFlag) -> sqlx::Result<SqlID>;
     async fn flag_update(&self, form: &NewFlag, old_id: &u64) -> sqlx::Result<()>;
     async fn flag_query(&self, id: SqlID) -> sqlx::Result<Flag>;
+    async fn flag_delete(&self, id: SqlID) -> sqlx::Result<()>;
     async fn flag_query_without_answer(&self, id: SqlID) -> sqlx::Result<AnswerlessFlag>;
     async fn flag_all_without_answer(&self) -> sqlx::Result<Vec<AnswerlessFlag>>;
     async fn flag_all(&self) -> sqlx::Result<Vec<Flag>>;
@@ -138,5 +139,17 @@ impl IFlag for AppState {
         )
         .fetch_all(&self.sql)
         .await
+    }
+
+    async fn flag_delete(&self, id: SqlID) -> sqlx::Result<()> {
+        sqlx::query!(
+            r#"
+        DELETE FROM flag WHERE id = ?;
+                "#,
+                id
+        )
+        .execute(&self.sql)
+        .await?;
+        Ok(())
     }
 }

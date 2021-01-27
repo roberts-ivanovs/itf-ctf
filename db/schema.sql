@@ -33,8 +33,8 @@ CREATE TABLE score (
     `flag_id` BIGINT UNSIGNED NOT NULL,
     `user_id` BIGINT UNSIGNED NOT NULL,
     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (`flag_id`) REFERENCES `flag`(`id`),
-    FOREIGN KEY (`user_id`) REFERENCES `users`(`id`),
+    FOREIGN KEY (`flag_id`) REFERENCES `flag`(`id`) ON DELETE CASCADE,
+    FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE,
     UNIQUE KEY `single_guess_per_user` (`flag_id`, `user_id`)
 );
 -- SAMPLE DATA

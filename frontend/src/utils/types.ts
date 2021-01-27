@@ -12,6 +12,7 @@ export interface FinalUpdateFlag {
 
 export interface UpdateFlag {
   name: string,
+  answer: string,
   description: string,
   filepath: string | null,
 }

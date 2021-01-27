@@ -1,7 +1,8 @@
-import React, { ReactElement, useEffect, useState } from 'react';
+import { AxiosError } from "axios";
+import React, { ReactElement, useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Requester } from '../../utils/Requester';
-import { Flag } from '../../utils/types';
+import { BasicAPI, Flag } from '../../utils/types';
 
 async function getFlags(callback: (arg0: Array<Flag>) => void): Promise<void> {
   const res = await Requester.getAllFlagsWithAnswers();
@@ -9,16 +10,37 @@ async function getFlags(callback: (arg0: Array<Flag>) => void): Promise<void> {
 }
 export function RootAdmin(): ReactElement {
   const [flags, setFlags] = useState<Array<Flag>>([]);
+  const [status, setStatus] = useState<ReactElement>();
 
   useEffect(() => {
     void getFlags(setFlags);
   }, []);
+
+
+  const del = useCallback(
+    async (flagId: number) => {
+      await Requester.deleteFlag(flagId).then((e) => setStatus(
+        <div className="alert alert-success">
+          Deleted
+        </div>,
+      )).catch((e: AxiosError<BasicAPI<string>>) => {
+        setStatus((
+          <div className="alert alert-danger">
+            {e.response?.data.msg}
+          </div>));
+        return null;
+      });
+      await getFlags(setFlags);
+    },
+    [],
+  );
 
   return (
     <>
       <Link className="btn btn-success" to="/veryobfuscatedadminpanel/new">
         CREATE A NEW FLAG
       </Link>
+      {status}
       <table className="table">
         <thead>
           <tr>
@@ -28,6 +50,7 @@ export function RootAdmin(): ReactElement {
             <th scope="col">Answer</th>
             <th scope="col">File</th>
             <th scope="col">Edit</th>
+            <th scope="col">Delete</th>
           </tr>
         </thead>
         <tbody>
@@ -46,6 +69,11 @@ export function RootAdmin(): ReactElement {
               </td>
               <td>
                 <Link className="btn btn-info" to={`/veryobfuscatedadminpanel/edit/${e.id}`}>Edit</Link>
+              </td>
+              <td>
+                <button type="button" className="btn btn-danger" onClick={() => del(e.id)}>
+                  Delete
+                </button>
               </td>
             </tr>
           ))}

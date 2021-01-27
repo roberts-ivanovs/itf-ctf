@@ -681,6 +681,16 @@
       ]
     }
   },
+  "c69bd4adce715a2b5e865bb37e3c4a15c48be4b3aed5b122799422b60251dcb1": {
+    "query": "\n        DELETE FROM flag WHERE id = ?;\n                ",
+    "describe": {
+      "columns": [],
+      "parameters": {
+        "Right": 1
+      },
+      "nullable": []
+    }
+  },
   "e1ea188e7140cf531d3a94970017b2753471e06f6decf09e7b9f0d20f46b9015": {
     "query": "\n        SELECT *\n        FROM users\n        ORDER BY id\n            ",
     "describe": {

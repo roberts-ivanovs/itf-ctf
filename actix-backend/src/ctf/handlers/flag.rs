@@ -5,7 +5,7 @@ use crate::{
     state::AppState,
 };
 use actix_multipart::Multipart;
-use actix_web::{get, patch, post};
+use actix_web::{get, patch, post, delete};
 use actix_web::{web, HttpRequest, Responder};
 use futures::{StreamExt, TryStreamExt};
 use serde::{Deserialize, Serialize};
@@ -103,50 +103,23 @@ async fn update_flag(
     Ok(res.to_resp())
 }
 
-// Add file to a flag
-// #[patch("/file/{id}")]
-// async fn save_file(
-//     mut payload: Multipart,
-//     path: web::Path<(u64,)>,
-//     state: web::Data<AppState>,
-// ) -> Result<impl Responder, Error> {
-//     // iterate over multipart stream
-//     while let Ok(Some(mut field)) = payload.try_next().await {
-//         let content_type = field.content_disposition().unwrap();
-//         let filename = content_type.get_filename().unwrap();
-//         let filepath = format!("/src/static/{}", &filename);
+// Delete flag
+#[delete("/{id}")]
+async fn delete_flag(
+    path: web::Path<(u64,)>,
+    _req: HttpRequest,
+    state: web::Data<AppState>,
+) -> Result<impl Responder, Error> {
+    state.flag_delete(path.0 .0).await?;
+    let res = ApiResult::<()>::new().with_msg("ok").code(204);
+    Ok(res.to_resp())
+}
 
-//         // File::create is blocking operation, use threadpool
-//         let mut f = web::block(|| std::fs::File::create(filepath))
-//             .await
-//             .unwrap();
-
-//         // Field in turn is stream of *Bytes* object
-//         while let Some(chunk) = field.next().await {
-//             let data = chunk.unwrap();
-//             // filesystem operations are blocking, we have to use threadpool
-//             f = web::block(move || f.write_all(&data).map(|_| f))
-//                 .await
-//                 .map_err(|_| Error::FileBlock)?;
-//         }
-
-//         // If file created succesffully -- Update the flag entry in the db
-//         let old_flag = state.flag_query(path.0 .0).await?;
-//         let old_flag = NewFlag::from_flag(old_flag);
-//         state.flag_update(&old_flag, &path.0 .0).await?;
-//     }
-//     // TODO Update filename
-//     let res = ApiResult::<()>::new().with_msg("ok").code(204);
-//     Ok(res.to_resp())
-// }
-
-// NOTE: Flags are pre-created
 
 pub fn init(cfg: &mut web::ServiceConfig) {
     cfg.service(get_flags);
     cfg.service(get_single_flag);
     cfg.service(get_flags_with_answers);
     cfg.service(update_flag);
-    cfg.service(create_flags);
-    // cfg.service(save_file);
+    cfg.service(delete_flag);
 }

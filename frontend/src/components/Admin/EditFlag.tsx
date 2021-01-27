@@ -1,11 +1,12 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
+import { AxiosError } from "axios";
 import React, {
   ReactElement, useCallback, useEffect, useState,
 } from 'react';
 import { useRouteMatch } from 'react-router-dom';
 import { Requester } from '../../utils/Requester';
 import {
-  AnswerlessFlag, FinalUpdateFlag, Flag, UpdateFlag,
+  AnswerlessFlag, BasicAPI, FinalUpdateFlag, Flag, UpdateFlag,
 } from '../../utils/types';
 
 async function getFlag(falgId: number, callback: (arg0: Flag) => void): Promise<void> {
@@ -21,6 +22,7 @@ export function EditFlag(): ReactElement {
   const m = useRouteMatch<Match>();
   const [existingFlag, setExistingFlag] = useState<Flag>();
   const [file, setFile] = useState<string|null>(null);
+  const [status, setStatus] = useState<ReactElement>();
 
   useEffect(() => {
     if (m.params.id) {
@@ -32,7 +34,17 @@ export function EditFlag(): ReactElement {
     async (withFile: boolean) => {
       if (m.params.id && existingFlag) {
         const flagWithoutAnswer: FinalUpdateFlag = { flag: existingFlag, file: withFile ? file : null };
-        const res = await Requester.updateFlag(Number(m.params.id), flagWithoutAnswer);
+        await Requester.updateFlag(Number(m.params.id), flagWithoutAnswer).then((e) => setStatus(
+          <div className="alert alert-success">
+            Updated
+          </div>,
+        )).catch((e: AxiosError<BasicAPI<string>>) => {
+          setStatus((
+            <div className="alert alert-danger">
+              {e.response?.data.msg}
+            </div>));
+          return null;
+        });
       }
     },
     [m.params.id, existingFlag, file],
@@ -43,6 +55,7 @@ export function EditFlag(): ReactElement {
       {existingFlag
         && (
         <div className="container mt-3">
+          {status}
           <h4> Edit flag</h4>
           <form>
             <div className="form-group">
@@ -80,9 +93,8 @@ export function EditFlag(): ReactElement {
               SAVE
             </button>
           </form>
-          <h4> Update with file</h4>
           <div className="PostImageUpload">
-            <h2>Upload file (will be saved with .zip appendix)</h2>
+            <h4>Upload file (will be saved with .zip appendix)</h4>
             <input
               type="file"
               id="image"
