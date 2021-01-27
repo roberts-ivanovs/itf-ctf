@@ -62,7 +62,12 @@
                     margin-bottom: 1rem;
 
                     p {
-                        padding-right: 2rem;
+                        flex: 1;
+                        padding-right: 1.5rem;
+                    }
+
+                    input {
+                        flex: 3;
                     }
                 }
 
