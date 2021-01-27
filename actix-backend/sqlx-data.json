@@ -44,7 +44,7 @@
           "type_info": {
             "type": "VarString",
             "flags": {
-              "bits": 4101
+              "bits": 4
             },
             "char_set": 224,
             "max_size": 1024
@@ -54,12 +54,12 @@
           "ordinal": 3,
           "name": "description",
           "type_info": {
-            "type": "VarString",
+            "type": "Blob",
             "flags": {
-              "bits": 0
+              "bits": 16
             },
             "char_set": 224,
-            "max_size": 131060
+            "max_size": 262140
           }
         }
       ],
@@ -69,7 +69,7 @@
       "nullable": [
         false,
         false,
-        false,
+        true,
         true
       ]
     }
@@ -96,6 +96,83 @@
       },
       "nullable": [
         false
+      ]
+    }
+  },
+  "46d4e445a6a433823e2a10e9f63bcec332f50f6154999a77987d71bd989f607c": {
+    "query": "\n        SELECT *\n        FROM flag\n        ORDER BY id\n            ",
+    "describe": {
+      "columns": [
+        {
+          "ordinal": 0,
+          "name": "id",
+          "type_info": {
+            "type": "LongLong",
+            "flags": {
+              "bits": 547
+            },
+            "char_set": 63,
+            "max_size": 20
+          }
+        },
+        {
+          "ordinal": 1,
+          "name": "name",
+          "type_info": {
+            "type": "VarString",
+            "flags": {
+              "bits": 4101
+            },
+            "char_set": 224,
+            "max_size": 1024
+          }
+        },
+        {
+          "ordinal": 2,
+          "name": "answer",
+          "type_info": {
+            "type": "VarString",
+            "flags": {
+              "bits": 4097
+            },
+            "char_set": 224,
+            "max_size": 1024
+          }
+        },
+        {
+          "ordinal": 3,
+          "name": "description",
+          "type_info": {
+            "type": "Blob",
+            "flags": {
+              "bits": 16
+            },
+            "char_set": 224,
+            "max_size": 262140
+          }
+        },
+        {
+          "ordinal": 4,
+          "name": "filepath",
+          "type_info": {
+            "type": "VarString",
+            "flags": {
+              "bits": 4
+            },
+            "char_set": 224,
+            "max_size": 1024
+          }
+        }
+      ],
+      "parameters": {
+        "Right": 0
+      },
+      "nullable": [
+        false,
+        false,
+        false,
+        true,
+        true
       ]
     }
   },
@@ -138,12 +215,25 @@
             "char_set": 63,
             "max_size": 20
           }
+        },
+        {
+          "ordinal": 3,
+          "name": "created_at",
+          "type_info": {
+            "type": "Timestamp",
+            "flags": {
+              "bits": 1153
+            },
+            "char_set": 63,
+            "max_size": 19
+          }
         }
       ],
       "parameters": {
         "Right": 1
       },
       "nullable": [
+        false,
         false,
         false,
         false
@@ -189,6 +279,18 @@
             "char_set": 63,
             "max_size": 20
           }
+        },
+        {
+          "ordinal": 3,
+          "name": "created_at",
+          "type_info": {
+            "type": "Timestamp",
+            "flags": {
+              "bits": 1153
+            },
+            "char_set": 63,
+            "max_size": 19
+          }
         }
       ],
       "parameters": {
@@ -197,8 +299,19 @@
       "nullable": [
         false,
         false,
+        false,
         false
       ]
+    }
+  },
+  "5f2923a48953c90b95f8591053a4297596f43d3da6b22ba4c5da10b44338badf": {
+    "query": "\n        UPDATE flag SET name = ?, answer = ?, filepath = ?, description = ? WHERE id = ?;\n                ",
+    "describe": {
+      "columns": [],
+      "parameters": {
+        "Right": 5
+      },
+      "nullable": []
     }
   },
   "72276124458bab8b7c7cad958d7b24f9c7cd9e8019ae8d99fcb3870eecf51603": {
@@ -334,7 +447,7 @@
           "type_info": {
             "type": "VarString",
             "flags": {
-              "bits": 4101
+              "bits": 4
             },
             "char_set": 224,
             "max_size": 1024
@@ -344,12 +457,12 @@
           "ordinal": 3,
           "name": "description",
           "type_info": {
-            "type": "VarString",
+            "type": "Blob",
             "flags": {
-              "bits": 0
+              "bits": 16
             },
             "char_set": 224,
-            "max_size": 131060
+            "max_size": 262140
           }
         }
       ],
@@ -359,7 +472,7 @@
       "nullable": [
         false,
         false,
-        false,
+        true,
         true
       ]
     }
@@ -428,12 +541,25 @@
             "char_set": 63,
             "max_size": 20
           }
+        },
+        {
+          "ordinal": 3,
+          "name": "created_at",
+          "type_info": {
+            "type": "Timestamp",
+            "flags": {
+              "bits": 1153
+            },
+            "char_set": 63,
+            "max_size": 19
+          }
         }
       ],
       "parameters": {
         "Right": 1
       },
       "nullable": [
+        false,
         false,
         false,
         false
@@ -522,12 +648,12 @@
           "ordinal": 3,
           "name": "description",
           "type_info": {
-            "type": "VarString",
+            "type": "Blob",
             "flags": {
-              "bits": 0
+              "bits": 16
             },
             "char_set": 224,
-            "max_size": 131060
+            "max_size": 262140
           }
         },
         {
@@ -536,7 +662,7 @@
           "type_info": {
             "type": "VarString",
             "flags": {
-              "bits": 4101
+              "bits": 4
             },
             "char_set": 224,
             "max_size": 1024
@@ -551,7 +677,7 @@
         false,
         false,
         true,
-        false
+        true
       ]
     }
   },

@@ -19,7 +19,8 @@ export function CTF(): ReactElement {
 
   return (
     <div className={`${style['content-wrapper']}`}>
-      <h1>CTF Title here</h1>
+      <h1>CTF ITF 2021</h1>
+      <h2>🎉 VUAS ITF turns 15! 🎉</h2>
       <div className={style['task-wrapper']}>
         {flags.map((e) => (
           <React.Fragment key={e.id}>

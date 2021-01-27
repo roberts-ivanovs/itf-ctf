@@ -27,7 +27,6 @@ export function Flag({ flag, id }: Props): ReactElement {
           const resNew = await Requester.postCreateUser({ email }).then(async (e) => Requester.getUserId(email).then((e) => e.data))
             .catch((e) => {
               const error = e.response.data as BasicAPI<null>;
-              console.log('here', error);
               setStatus((
                 <div className="alert alert-danger">
                   {error.msg}
@@ -39,10 +38,9 @@ export function Flag({ flag, id }: Props): ReactElement {
 
       if (!userId) return;
 
-
       setStatus2(
         <div className="alert alert-success">
-          Tavs segvārds -- {userId.name}
+          Your secret name -- {userId.name}
         </div>,
       );
 
@@ -91,24 +89,27 @@ export function Flag({ flag, id }: Props): ReactElement {
               {status}
               {status2}
               <div className={`${style.description}`}>
-                {flag.description}
+                <div dangerouslySetInnerHTML={{ __html: flag.description }} />
               </div>
-              <a className={`${style.download}`} href={`/common_static/${flag.filepath}`} download>
-                <i className="fas fa-file-download" />
-                <p>Lejupielādēt uzdevumu</p>
-              </a>
+              {flag.filepath
+                && (
+                <a className={`${style.download}`} href={`/common_static/${flag.filepath}`} download>
+                  <i className="fas fa-file-download" />
+                  <p>Download file</p>
+                </a>
+                )}
               <div>
                 <div className={`${style.input}`}>
-                  <p>e-pasts:</p>
+                  <p>E-mail:</p>
                   <input type="email" onChange={(e) => setEmail(e.target.value)} value={email} />
                 </div>
                 <div className={`${style.input}`}>
-                  <p>atbilde:</p>
+                  <p>Answer:</p>
                   <input type="text" onChange={(e) => setAnswer(e.target.value)} value={answer} />
                 </div>
                 <div className={`${style['btn-wrapper']}`}>
                   <button className={`${style['submit-btn']}`} type="button" onClick={submit}>
-                    Iesniegt atbild
+                    Submit
                   </button>
                 </div>
               </div>

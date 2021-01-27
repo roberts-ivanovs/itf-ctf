@@ -1,5 +1,6 @@
+use chrono::Utc;
 use serde::{Deserialize, Serialize};
-use sqlx::FromRow;
+use sqlx::{FromRow};
 
 use crate::state::AppState;
 
@@ -11,6 +12,7 @@ pub struct Score {
     pub id: SqlID,
     pub flag_id: SqlID,
     pub user_id: SqlID,
+    pub created_at: chrono::DateTime<Utc>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]

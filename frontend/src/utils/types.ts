@@ -4,11 +4,23 @@ export interface BasicAPI<T> {
   data: T
 }
 
+
+export interface FinalUpdateFlag {
+  flag: UpdateFlag,
+  file: string | null,
+}
+
+export interface UpdateFlag {
+  name: string,
+  description: string,
+  filepath: string | null,
+}
+
 export interface AnswerlessFlag {
   id: number,
   name: string,
   description: string,
-  filepath: string,
+  filepath: string | null,
 }
 
 export interface Flag extends AnswerlessFlag {

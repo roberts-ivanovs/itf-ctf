@@ -8,6 +8,8 @@ services:
     build:
       context: ./actix-backend
       dockerfile: Dockerfile.dev
+    volumes:
+      - ./static/:/app/static
   nginx:
     build: ./nginx
     env_file: .env

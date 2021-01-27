@@ -1,9 +1,7 @@
-CREATE DATABASE IF NOT EXISTS `actix_todo`;
-USE `actix_todo`;
-DROP TABLE IF EXISTS `subtask`;
-DROP TABLE IF EXISTS `todo`;
+
 DROP DATABASE actix_todo;
 CREATE DATABASE actix_todo;
+ALTER DATABASE actix_todo CHARACTER SET utf8;
 USE actix_todo;
 -- BASIC SCHEMA
 CREATE TABLE nouns (
@@ -23,14 +21,18 @@ CREATE TABLE flag (
     `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `name` VARCHAR(256) NOT NULL UNIQUE,
     `answer` VARCHAR(256) NOT NULL,
-    `description` VARCHAR(32765) NULL,
-    `filepath` VARCHAR(256) NOT NULL UNIQUE
+    `description` TEXT NULL ,
+    `filepath` VARCHAR(256) NULL UNIQUE
 );
+
+ALTER TABLE flag CONVERT TO CHARACTER SET utf8;
+
 CREATE TABLE score (
     `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     -- Each user can guess a flag only once
     `flag_id` BIGINT UNSIGNED NOT NULL,
     `user_id` BIGINT UNSIGNED NOT NULL,
+    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (`flag_id`) REFERENCES `flag`(`id`),
     FOREIGN KEY (`user_id`) REFERENCES `users`(`id`),
     UNIQUE KEY `single_guess_per_user` (`flag_id`, `user_id`)
@@ -52,8 +54,8 @@ VALUES (
     (
         "uzdevums 2",
         "asdf",
-        "task2.zip",
-        "Apraksts nr 2"
+        NULL,
+        "<h1>Apraksts ka embeded html. Sis noteikti nav pareizakais veids ka to visu procesu taisit</h1>"
     );
 INSERT INTO users (name, email)
 VALUES ("Lielais Dukurs", "akmens@asd.lv"),
@@ -63,7 +65,7 @@ VALUES (1, 1),
     (2, 1),
     (2, 2);
 INSERT INTO nouns(name)
-VALUES ("bullis"),
+VALUES ("Bullis"),
     ("Bumbiere"),
     ("Bumbieris"),
     ("Bumbieru sidrs"),

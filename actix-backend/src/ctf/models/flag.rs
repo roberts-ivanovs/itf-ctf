@@ -11,15 +11,26 @@ pub struct Flag {
     pub name: String,
     pub answer: String,
     pub description: Option<String>,
-    pub filepath: String,
+    pub filepath: Option<String>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct NewFlag {
     pub name: String,
     pub answer: String,
-    pub description: String,
-    pub filepath: String,
+    pub description: Option<String>,
+    pub filepath: Option<String>,
+}
+
+impl NewFlag {
+    pub fn from_flag(flag: Flag) -> Self {
+        Self {
+            name: flag.name,
+            answer: flag.answer,
+            description: flag.description,
+            filepath: flag.filepath,
+        }
+    }
 }
 
 #[derive(FromRow, Clone, Serialize, Deserialize, Debug)]
@@ -27,15 +38,17 @@ pub struct AnswerlessFlag {
     pub id: SqlID,
     pub name: String,
     pub description: Option<String>,
-    pub filepath: String,
+    pub filepath: Option<String>,
 }
 
 #[async_trait]
 pub trait IFlag {
     async fn flag_add(&self, form: &NewFlag) -> sqlx::Result<SqlID>;
+    async fn flag_update(&self, form: &NewFlag, old_id: &u64) -> sqlx::Result<()>;
     async fn flag_query(&self, id: SqlID) -> sqlx::Result<Flag>;
     async fn flag_query_without_answer(&self, id: SqlID) -> sqlx::Result<AnswerlessFlag>;
     async fn flag_all_without_answer(&self) -> sqlx::Result<Vec<AnswerlessFlag>>;
+    async fn flag_all(&self) -> sqlx::Result<Vec<Flag>>;
 }
 
 #[async_trait]
@@ -57,11 +70,41 @@ impl IFlag for AppState {
         Ok(id)
     }
 
+    async fn flag_update(&self, form: &NewFlag, old_id: &u64) -> sqlx::Result<()> {
+        sqlx::query!(
+            r#"
+        UPDATE flag SET name = ?, answer = ?, filepath = ?, description = ? WHERE id = ?;
+                "#,
+            form.name,
+            form.answer,
+            form.filepath,
+            form.description,
+            old_id
+        )
+        .execute(&self.sql)
+        .await?;
+        Ok(())
+    }
+
     async fn flag_query(&self, id: SqlID) -> sqlx::Result<Flag> {
         sqlx::query_as!(
             Flag,
             r#"
         SELECT *
+        FROM flag
+        where id = ?
+                "#,
+            id
+        )
+        .fetch_one(&self.sql)
+        .await
+    }
+
+    async fn flag_query_without_answer(&self, id: SqlID) -> sqlx::Result<AnswerlessFlag> {
+        sqlx::query_as!(
+            AnswerlessFlag,
+            r#"
+        SELECT id, name, filepath, description
         FROM flag
         where id = ?
                 "#,
@@ -84,17 +127,16 @@ impl IFlag for AppState {
         .await
     }
 
-    async fn flag_query_without_answer(&self, id: SqlID) -> sqlx::Result<AnswerlessFlag> {
+    async fn flag_all(&self) -> sqlx::Result<Vec<Flag>> {
         sqlx::query_as!(
-            AnswerlessFlag,
+            Flag,
             r#"
-        SELECT id, name, filepath, description
+        SELECT *
         FROM flag
-        where id = ?
-                "#,
-            id
+        ORDER BY id
+            "#,
         )
-        .fetch_one(&self.sql)
+        .fetch_all(&self.sql)
         .await
     }
 }
