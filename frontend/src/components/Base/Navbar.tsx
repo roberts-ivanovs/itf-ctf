@@ -18,6 +18,12 @@ export function Navbar(): ReactElement {
       >
         Score
       </NavLink>
+      <NavLink
+        exact
+        to="/about"
+      >
+        About
+      </NavLink>
     </div>
   );
 }
