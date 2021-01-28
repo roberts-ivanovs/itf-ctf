@@ -119,6 +119,7 @@ async fn delete_flag(
 pub fn init(cfg: &mut web::ServiceConfig) {
     cfg.service(get_flags);
     cfg.service(get_single_flag);
+    cfg.service(create_flags);
     cfg.service(get_flags_with_answers);
     cfg.service(update_flag);
     cfg.service(delete_flag);
