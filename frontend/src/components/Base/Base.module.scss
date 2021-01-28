@@ -3,7 +3,6 @@
 .navbar-wrapper {
     display: flex;
     flex-direction: row;
-    // align-items: center;
     justify-content: space-around;
     height: 5rem;
     background-color: base.$base-dark;
@@ -31,6 +30,13 @@
 .footer-wrapper {
     height: 5rem;
     background-color: base.$base-dark;
-    color: white;
     margin-top: 5rem;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+
+    p {
+        color: rgba($color: #ffffff, $alpha: 0.5);
+        padding-right: 2rem;
+    }
 }

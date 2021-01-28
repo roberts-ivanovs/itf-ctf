@@ -29,8 +29,7 @@ export function Scoreboard(): ReactElement {
             <td>{e.user.name}</td>
             <td>
               <abbr title={`Atbidlēja pareizi uz "${e.flags.map((i) => i.name).join('", "')}"`}>
-                {e.score.toPrecision(2)}
-
+                {(Math.round(e.score)).toString(2)}
               </abbr>
             </td>
           </tr>
