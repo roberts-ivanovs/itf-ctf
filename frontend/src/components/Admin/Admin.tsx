@@ -8,15 +8,16 @@ import { ScoreboardWithEmails } from './ScoreWithEmails';
 
 export function Admin(): ReactElement {
   return (
-    <div>
-
+    <>
       <AdminNavbar />
-      <Switch>
-        <Route exact path="/veryobfuscatedadminpanel" component={RootAdmin} />
-        <Route exact path="/veryobfuscatedadminpanel/new" component={NewFlag} />
-        <Route exact path="/veryobfuscatedadminpanel/edit/:id" component={EditFlag} />
-        <Route exact path="/veryobfuscatedadminpanel/score" component={ScoreboardWithEmails} />
-      </Switch>
-    </div>
+      <div className="container mt-3">
+        <Switch>
+          <Route exact path="/veryobfuscatedadminpanel" component={RootAdmin} />
+          <Route exact path="/veryobfuscatedadminpanel/new" component={NewFlag} />
+          <Route exact path="/veryobfuscatedadminpanel/edit/:id" component={EditFlag} />
+          <Route exact path="/veryobfuscatedadminpanel/score" component={ScoreboardWithEmails} />
+        </Switch>
+      </div>
+    </>
   );
 }

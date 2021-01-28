@@ -14,7 +14,7 @@ export function Scoreboard(): ReactElement {
   }, []);
 
   return (
-    <table className="table">
+    <table className="table container">
       <thead>
         <tr>
           <th scope="col">#</th>
@@ -28,7 +28,7 @@ export function Scoreboard(): ReactElement {
             <th scope="row">{num + 1}</th>
             <td>{e.user.name}</td>
             <td>
-              <abbr title={`Atbidlēja pareizi uz "${e.flags.map((i) => i.name).join('", "')}"`}>
+              <abbr title={`Answered correctly on "${e.flags.map((i) => i.name).join('", "')}"`}>
                 {(Math.round(e.score)).toString(2)}
               </abbr>
             </td>

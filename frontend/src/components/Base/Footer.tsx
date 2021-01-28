@@ -5,7 +5,7 @@ import style from './Base.module.scss';
 export function Footer(): ReactElement {
   return (
     <div className={`${style['footer-wrapper']}`}>
-      <p>Problēmu gadījumā sazinieties ar robertsivanovs1999@gmail.com</p>
+      <p>Problēmu gadījumā rakstīt: robertsivanovs1999@gmail.com</p>
     </div>
   );
 }
