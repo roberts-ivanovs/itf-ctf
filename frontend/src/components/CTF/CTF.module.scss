@@ -9,6 +9,14 @@
         font-weight: bold;
     }
 
+    abbr {
+        text-decoration: none;
+
+        div {
+            padding-top: 1%;
+        }
+    }
+
     .task-wrapper {
         display: flex;
         flex-wrap: wrap;

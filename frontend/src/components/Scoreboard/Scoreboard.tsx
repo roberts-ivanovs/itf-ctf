@@ -20,6 +20,7 @@ export function Scoreboard(): ReactElement {
           <th scope="col">#</th>
           <th scope="col">Name</th>
           <th scope="col">Score</th>
+          <th scope="col">Answered</th>
         </tr>
       </thead>
       <tbody>
@@ -28,9 +29,12 @@ export function Scoreboard(): ReactElement {
             <th scope="row">{num + 1}</th>
             <td>{e.user.name}</td>
             <td>
-              <abbr title={`Answered correctly on "${e.flags.map((i) => i.name).join('", "')}"`}>
-                {(Math.round(e.score)).toString(2)}
-              </abbr>
+              {(Math.round(e.score)).toString(2)}
+            </td>
+            <td>
+
+              {e.flags.map((i) => <span key={i.id} className="badge badge-secondary">{i.name}</span>)}
+
             </td>
           </tr>
         ))}

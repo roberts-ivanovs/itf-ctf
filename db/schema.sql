@@ -38,32 +38,32 @@ CREATE TABLE score (
     UNIQUE KEY `single_guess_per_user` (`flag_id`, `user_id`)
 );
 -- SAMPLE DATA
--- INSERT INTO flag(name, answer, filepath, description)
--- VALUES (
---         "uzdevums 1",
---         "correct",
---         "task1.zip",
---         "Apraksts nr 1"
---     ),
---     (
---         "uzdevums 3",
---         "corrects",
---         "task3.zip",
---         "Apraksts nr 3 loti gars"
---     ),
---     (
---         "uzdevums 2",
---         "asdf",
---         NULL,
---         "<h1>Apraksts ka embeded html. Sis noteikti nav pareizakais veids ka to visu procesu taisit</h1>"
---     );
--- INSERT INTO users (name, email)
--- VALUES ("Lielais Dukurs", "akmens@asd.lv"),
---     ("Mazais Bumbulis", "ivans@asd.lv");
--- INSERT INTO score(flag_id, user_id)
--- VALUES (1, 1),
---     (2, 1),
---     (2, 2);
+/* INSERT INTO flag(name, answer, filepath, description)
+VALUES (
+        "uzdevums 1",
+        "correct",
+        "task1.zip",
+        "Apraksts nr 1"
+    ),
+    (
+        "uzdevums 3",
+        "corrects",
+        "task3.zip",
+        "Apraksts nr 3 loti gars"
+    ),
+    (
+        "uzdevums 2",
+        "asdf",
+        NULL,
+        "<h1>Apraksts ka embeded html. Sis noteikti nav pareizakais veids ka to visu procesu taisit</h1>"
+    );
+INSERT INTO users (name, email)
+VALUES ("Lielais Dukurs", "akmens@asd.lv"),
+    ("Mazais Bumbulis", "ivans@asd.lv");
+INSERT INTO score(flag_id, user_id)
+VALUES (1, 1),
+    (2, 1),
+    (2, 2); */
 INSERT INTO nouns(name)
 VALUES ("Bullis"),
     ("Bumbiere"),

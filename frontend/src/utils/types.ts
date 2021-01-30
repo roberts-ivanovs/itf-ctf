@@ -53,3 +53,10 @@ export interface PostAnswer {
   metadata: ScoreRawCreate,
   answer: string,
 }
+
+
+export interface FlagResponse {
+  flag: AnswerlessFlag,
+  totalAnswers: number,
+  totalAnswersOfPopulation: number
+}

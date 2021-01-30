@@ -13,6 +13,8 @@ pub fn run(
     let server = HttpServer::new(move || {
         // move counter into the closure
         App::new()
+            .data(web::PayloadConfig::new(1 << 25))
+            .data(web::JsonConfig::default().limit(1024 * 1024 * 50))
             .data(state.clone()) // pass database pool to application so we can access it inside handlers
             .wrap(Logger::default())
             .configure(routes::routes)

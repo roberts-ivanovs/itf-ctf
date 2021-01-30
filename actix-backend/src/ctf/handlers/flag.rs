@@ -1,21 +1,47 @@
 use crate::{
     api::ApiResult,
-    ctf::models::flag::{Flag, IFlag, NewFlag},
+    ctf::models::{
+        flag::{AnswerlessFlag, Flag, IFlag, NewFlag},
+        score::IScore,
+        users::IUser,
+    },
     how::Error,
     state::AppState,
 };
 use actix_multipart::Multipart;
-use actix_web::{get, patch, post, delete};
+use actix_web::{delete, get, patch, post, web::Json};
 use actix_web::{web, HttpRequest, Responder};
 use futures::{StreamExt, TryStreamExt};
 use serde::{Deserialize, Serialize};
 use std::{fs, io::Write, path::PathBuf};
 
+#[derive(Serialize, Deserialize, Debug)]
+#[serde(rename_all = "camelCase")]
+struct AnswerlessFlagComposite {
+    flag: AnswerlessFlag,
+    total_answers: u64,
+    total_answers_of_population: f64,
+}
+
 #[get("")]
-async fn get_flags(_req: HttpRequest, state: web::Data<AppState>) -> Result<impl Responder, Error> {
-    let users = &state.flag_all_without_answer().await?;
-    let res = ApiResult::new().with_msg("ok").with_data(users);
-    Ok(res.to_resp())
+async fn get_flags(
+    _req: HttpRequest,
+    state: web::Data<AppState>,
+) -> Result<Json<ApiResult<Vec<AnswerlessFlagComposite>>>, Error> {
+    let flags = state.flag_all_without_answer().await?;
+    let total_users = state.user_all().await?.len() as u64;
+    let mut result = vec![];
+    for flag in flags.into_iter() {
+        let total_answers = state.score_for_flag(flag.id).await?.len() as u64;
+        let flag_comp = AnswerlessFlagComposite {
+            flag: flag,
+            total_answers_of_population: total_answers as f64 / total_users as f64,
+            total_answers,
+        };
+        result.push(flag_comp);
+    }
+    let res = ApiResult::new().with_msg("ok").with_data(result);
+    Ok(Json(res))
 }
 
 #[get("/single/{id}")]
@@ -24,8 +50,8 @@ async fn get_single_flag(
     _req: HttpRequest,
     state: web::Data<AppState>,
 ) -> Result<impl Responder, Error> {
-    let users = &state.flag_query(path.0 .0).await?;
-    let res = ApiResult::new().with_msg("ok").with_data(users);
+    let flag = &state.flag_query(path.0 .0).await?;
+    let res = ApiResult::new().with_msg("ok").with_data(flag);
     Ok(res.to_resp())
 }
 
@@ -114,7 +140,6 @@ async fn delete_flag(
     let res = ApiResult::<()>::new().with_msg("ok").code(204);
     Ok(res.to_resp())
 }
-
 
 pub fn init(cfg: &mut web::ServiceConfig) {
     cfg.service(get_flags);

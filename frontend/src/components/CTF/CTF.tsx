@@ -1,17 +1,18 @@
+/* eslint-disable jsx-a11y/control-has-associated-label */
 import React, { ReactElement, useEffect, useState } from 'react';
 import { Requester } from '../../utils/Requester';
-import { AnswerlessFlag } from '../../utils/types';
+import { AnswerlessFlag, FlagResponse } from '../../utils/types';
 import { Flag } from './Flag';
 
 import style from './CTF.module.scss';
 
-async function getFlags(callback: (arg0: Array<AnswerlessFlag>) => void): Promise<void> {
+async function getFlags(callback: (arg0: Array<FlagResponse>) => void): Promise<void> {
   const res = await Requester.getAllFlags();
   callback(res.data);
 }
 
 export function CTF(): ReactElement {
-  const [flags, setFlags] = useState<Array<AnswerlessFlag>>([]);
+  const [flags, setFlags] = useState<Array<FlagResponse>>([]);
 
   useEffect(() => {
     void getFlags(setFlags);
@@ -23,16 +24,33 @@ export function CTF(): ReactElement {
       <h2>🎉 VUAS ITF turns 15! 🎉</h2>
       <div className={style['task-wrapper']}>
         {flags.map((e) => (
-          <React.Fragment key={e.id}>
-            <div key={e.id} className={`${style['flag-box']}`} data-toggle="modal" data-target={`#modal${e.id}`}>
+          <React.Fragment key={e.flag.id}>
+            <div className={`${style['flag-box']}`} data-toggle="modal" data-target={`#modal${e.flag.id}`}>
               <div className={`${style['gears-icon']}`}>
                 <i className="fas fa-cogs" />
               </div>
               <div className={`${style['flag-title']}`}>
-                <p>{e.name}</p>
+                <abbr title={`Correct answers: ${e.totalAnswers}`}>
+                  <div className="row">
+                    <div className="col-2">
+                      Difficulty
+                    </div>
+                    <div className="col">
+                      <div className="progress">
+                        <div
+                          className="progress-bar progress-bar-striped bg-danger progress-bar-animated"
+                          role="progressbar"
+                          style={{ width: `${100 - (e.totalAnswersOfPopulation * 100)}%` }}
+                        />
+                      </div>
+
+                    </div>
+                  </div>
+                </abbr>
+                <p>{e.flag.name}</p>
               </div>
             </div>
-            <Flag key={`${e.id}modal`} id={e.id.toString()} flag={e} />
+            <Flag key={`${e.flag.id}modal`} id={e.flag.id.toString()} flag={e.flag} />
           </React.Fragment>
         ))}
       </div>
