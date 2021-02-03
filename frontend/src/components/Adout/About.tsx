@@ -22,7 +22,7 @@ export function About(): ReactElement {
         The answers are hidden somewhere in the task.
       </p>
       <p className="pl-3">
-        They can be distinguished usually by some kind of a recognisable prefix, like - <b>veactf2021{'{answer}'}</b>.
+        They can be distinguished usually by some kind of a recognisable prefix, like - <b>veactf2020{'{answer}'}</b>.
       </p>
       <p className="pl-3">
         Upon finding the answer, you must enter it in the <b>Answer</b> input field, as well as the <b>e-mail</b>

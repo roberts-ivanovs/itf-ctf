@@ -1,15 +1,6 @@
 use std::{collections::HashMap, vec};
 
-use crate::{
-    api::ApiResult,
-    ctf::models::{
-        flag::{Flag, IFlag},
-        score::{IScore, NewScore},
-        users::{IUser, User},
-    },
-    how::Error,
-    state::AppState,
-};
+use crate::{api::ApiResult, ctf::models::{flag::{AnswerlessFlag, Flag, IFlag}, score::{IScore, NewScore}, users::{IUser, User}}, how::Error, state::AppState};
 use actix_web::{get, post};
 use actix_web::{web, HttpRequest, Responder};
 use serde::{Deserialize, Serialize};
@@ -17,7 +8,7 @@ use serde::{Deserialize, Serialize};
 #[derive(Serialize, Deserialize, Debug)]
 struct ScoreWithObjects {
     user: User,
-    flags: Vec<Flag>,
+    flags: Vec<AnswerlessFlag>,
     score: f64,
 }
 
@@ -30,8 +21,13 @@ async fn get_score(_req: HttpRequest, state: web::Data<AppState>) -> Result<impl
     let mut score_mapping = HashMap::new();
     for f in flags.iter() {
         let scores = &state.score_for_flag(f.id).await?;
-        // Calculate the 1/n score for every flag based on the score count (create a hash map)
-        score_mapping.insert(f.id, 1000.0 / scores.len() as f64);
+        if f.name.starts_with("011") {
+            // Honeypot handling
+            score_mapping.insert(f.id, -2000.0 / scores.len() as f64);
+        } else {
+            // Calculate the 1/n score for every flag based on the score count (create a hash map)
+            score_mapping.insert(f.id, 1000.0 / scores.len() as f64);
+        }
     }
 
     // ---------- STAGE 2 ---------- //
@@ -47,12 +43,12 @@ async fn get_score(_req: HttpRequest, state: web::Data<AppState>) -> Result<impl
         for item in scores {
             let flag = state.flag_query(item.flag_id).await?;
             user_score += score_mapping.get(&flag.id).unwrap_or(&0.0);
-            user_flags.push(flag);
+            user_flags.push(flag.into());
         }
 
         // Create the response ovject
         let score_obj = ScoreWithObjects {
-            user: user,
+            user,
             flags: user_flags,
             score: user_score,
         };

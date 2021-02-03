@@ -14,6 +14,17 @@ pub struct Flag {
     pub filepath: Option<String>,
 }
 
+impl Into<AnswerlessFlag> for Flag {
+    fn into(self) -> AnswerlessFlag {
+        AnswerlessFlag {
+            id: self.id,
+            name: self.name,
+            description: self.description,
+            filepath: self.filepath,
+        }
+    }
+}
+
 #[derive(Serialize, Deserialize, Debug)]
 pub struct NewFlag {
     pub name: String,

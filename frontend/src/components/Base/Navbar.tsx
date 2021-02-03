@@ -24,6 +24,12 @@ export function Navbar(): ReactElement {
       >
         About
       </NavLink>
+      <NavLink
+        exact
+        to="/linktoevent"
+      >
+        Event Link
+      </NavLink>
     </div>
   );
 }

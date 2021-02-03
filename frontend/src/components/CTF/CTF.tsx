@@ -5,6 +5,7 @@ import { AnswerlessFlag, FlagResponse } from '../../utils/types';
 import { Flag } from './Flag';
 
 import style from './CTF.module.scss';
+import { Event } from "../Adout/Event";
 
 async function getFlags(callback: (arg0: Array<FlagResponse>) => void): Promise<void> {
   const res = await Requester.getAllFlags();
@@ -20,8 +21,7 @@ export function CTF(): ReactElement {
 
   return (
     <div className={`${style['content-wrapper']}`}>
-      <h1>CTF ITF 2021</h1>
-      <h2>🎉 VUAS ITF turns 15! 🎉</h2>
+      <Event />
       <div className={style['task-wrapper']}>
         {flags.map((e) => (
           <React.Fragment key={e.flag.id}>
